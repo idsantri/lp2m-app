@@ -1,0 +1,17 @@
+{
+	"extends": "@quasar/app-webpack/tsconfig-preset",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"noUnusedLocals": true,
+	    "noUnusedParameters": true,
+	},
+	// "include": ["src/**/*.ts", "src/**/*.vue"],
+	"exclude": [
+		"./dist",
+		"./.quasar",
+		"./node_modules",
+		"./src-capacitor",
+		"./src-cordova",
+		"./quasar.config.*.temporary.compiled*"
+	]
+}

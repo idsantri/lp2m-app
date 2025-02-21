@@ -1,0 +1,62 @@
+{
+	"name": "idsantri-app",
+	"version": "1.0.2",
+	"description": "IDSantri: Aplikasi Madrasah dan Pesantren",
+	"productName": "IDSantri App",
+	"author": "idsantri <idsantri.mail@gmail.com>",
+	"private": true,
+	"scripts": {
+		"lint": "eslint --ext .js,.ts,.vue ./",
+		"format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
+		"test": "echo \"No test specified\" && exit 0",
+		"dev": "quasar dev",
+		"build": "quasar build"
+	},
+	"dependencies": {
+		"@quasar/extras": "^1.16.11",
+		"axios": "^1.2.1",
+		"core-js": "^3.6.5",
+		"datatables.net-dt": "^2.0.2",
+		"datatables.net-vue3": "^3.0.1",
+		"html2pdf.js": "^0.10.1",
+		"pinia": "^2.0.11",
+		"pinia-plugin-persistedstate": "^3.2.1",
+		"quasar": "^2.16.3",
+		"register-service-worker": "^1.7.2",
+		"vue": "^3.4.18",
+		"vue-currency-input": "^3.1.0",
+		"vue-image-crop-upload": "^3.0.3",
+		"vue-router": "^4.0.0",
+		"xlsx": "^0.18.5"
+	},
+	"devDependencies": {
+		"@quasar/app-webpack": "^4.0.0-beta.15",
+		"@types/node": "^20.5.9",
+		"@typescript-eslint/eslint-plugin": "^6.6.0",
+		"@typescript-eslint/parser": "^6.6.0",
+		"eslint": "^8.11.0",
+		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-vue": "^9.0.0",
+		"eslint-webpack-plugin": "^4.0.1",
+		"prettier": "^3.0.3",
+		"ts-loader": "^9.4.2",
+		"typescript": "^5.2.2",
+		"workbox-webpack-plugin": "^7.0.0"
+	},
+	"browserslist": [
+		"last 10 Chrome versions",
+		"last 10 Firefox versions",
+		"last 4 Edge versions",
+		"last 7 Safari versions",
+		"last 8 Android versions",
+		"last 8 ChromeAndroid versions",
+		"last 8 FirefoxAndroid versions",
+		"last 10 iOS versions",
+		"last 5 Opera versions"
+	],
+	"engines": {
+		"node": "^24 || ^22 || ^20 || ^18",
+		"npm": ">= 6.13.4",
+		"yarn": ">= 1.21.1"
+	}
+}
