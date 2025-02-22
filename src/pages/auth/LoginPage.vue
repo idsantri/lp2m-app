@@ -73,13 +73,12 @@
 </template>
 
 <script setup>
-import { onUpdated, ref, watch } from 'vue';
+import { onUpdated, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import authState from 'stores/auth-store';
 import api from 'src/api';
-import config from 'src/config';
 import { toArray } from 'src/utils/array-object';
 import { notifyAlert, notifySuccess } from 'src/utils/notify';
+import authStore from 'stores/auth-store';
 
 const router = useRouter();
 const login = ref('');
@@ -89,31 +88,19 @@ const showSpinner = ref(false);
 const emit = defineEmits(['title', 'errors']);
 emit('title', 'Login');
 emit('errors', []);
+const auth = authStore();
 
-const props = defineProps({
-	credential: { type: Object },
-});
-
-const submitLogin = async () => {
-	// const formData = new FormData(e.target);
-	// const formObject = Object.fromEntries(formData.entries());
-	// console.log(formObject);
-	// return;
+const submitLogin = async (e) => {
+	const formData = new FormData(e.target);
+	const formObject = Object.fromEntries(formData.entries());
 
 	emit('errors', []);
 	try {
 		showSpinner.value = true;
-		const response = await api.post('login', {
-			login: login.value,
-			password: password.value,
-		});
+		const response = await api.post('login', formObject);
 		const responseData = response.data;
 		const data = responseData.data;
-
-		authState().token = data.token;
-		authState().user = data.user;
-		authState().roles = data.roles;
-		authState().permissions = data.permissions;
+		auth.setUser(data);
 
 		notifySuccess(responseData.message);
 		router.push('/');
@@ -129,16 +116,6 @@ const submitLogin = async () => {
 		showSpinner.value = false;
 	}
 };
-
-watch(
-	[() => props.credential.username, () => props.credential.password],
-	([nUsername, nPassword]) => {
-		if (config.DEV) {
-			if (nUsername) login.value = nUsername;
-			if (nPassword) password.value = nPassword;
-		}
-	},
-);
 
 onUpdated(() => {
 	const resend = document.getElementById('resend-email');

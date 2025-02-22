@@ -44,13 +44,13 @@
 					v-model="input.nidn"
 					hint="Nomor Induk Dosen Nasional"
 				/>
-				<q-input
-					class="q-mt-sm"
-					dense
-					outlined
-					label="Prodi"
+				<InputSelectArray
 					v-model="input.prodi"
-					hint=""
+					url="prodi"
+					label="Prodi *"
+					class="q-mt-sm"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					:btn-setting="false"
 				/>
 				<q-input
 					class="q-mt-sm"
@@ -90,6 +90,7 @@
 import { onMounted, ref } from 'vue';
 import apiUpdate from 'src/api/api-update';
 import FormHeader from 'src/components/FormHeader.vue';
+import InputSelectArray from 'src/components/InputSelectArray.vue';
 
 const props = defineProps({
 	isNew: Boolean,

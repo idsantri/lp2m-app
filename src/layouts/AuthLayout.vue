@@ -66,11 +66,6 @@
 				</q-card>
 			</q-page>
 
-			<!-- INFO LOGIN -->
-			<q-dialog v-model="modalInfo">
-				<info-login @setCredential="setCredential" />
-			</q-dialog>
-
 			<!-- INSTALL PWA -->
 			<q-dialog v-model="modalIos">
 				<info-ios />
@@ -89,14 +84,8 @@ const title = ref('Autentikasi');
 const handleTitle = (value) => (title.value = value);
 const errors = ref([]);
 const handleErrors = (value) => (errors.value = value);
-const modalInfo = ref(false);
 const modalIos = ref(false);
 const credential = ref({});
-
-const setCredential = (item) => {
-	credential.value = item;
-	modalInfo.value = false;
-};
 
 /**
  * -----------------------------------------

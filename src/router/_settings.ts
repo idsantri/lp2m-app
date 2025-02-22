@@ -18,4 +18,16 @@ export default [
 			},
 		],
 	},
+	{
+		path: 'lists',
+		component: () => import('src/pages/settings/lists/ListsIndex.vue'),
+		meta: { title: 'Setting: List' },
+		children: [
+			{
+				path: ':listKey',
+				component: () =>
+					import('src/pages/settings/lists/ListsByKey.vue'),
+			},
+		],
+	},
 ];

@@ -204,5 +204,12 @@ const menuSetting = [
 		caption: 'Akses Pengguna',
 		disable: false,
 	},
+	{
+		to: '/settings/lists',
+		icon: 'list',
+		label: 'List',
+		caption: 'Auto Complete (Form Isian)',
+		disable: false,
+	},
 ];
 </script>

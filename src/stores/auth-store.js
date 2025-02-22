@@ -6,8 +6,8 @@ const authStore = defineStore('auth', {
 		user: null,
 		roles: null,
 		permissions: null,
-		isLogin: false,
 	}),
+
 	getters: {
 		getUser: (state) => state.user,
 		getToken: (state) => state.token,
@@ -15,6 +15,7 @@ const authStore = defineStore('auth', {
 		getPermissions: (state) => state.permissions,
 		getIsLogin: (state) => (state.token?.length > 1 ? true : false),
 	},
+
 	actions: {
 		setUser(payload) {
 			if (payload.roles) this.roles = payload.roles;
@@ -30,6 +31,7 @@ const authStore = defineStore('auth', {
 			this.token = null;
 		},
 	},
+
 	persist: {
 		storage: localStorage,
 	},
