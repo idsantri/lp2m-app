@@ -29,13 +29,17 @@
 					<div>
 						<div style="max-width: 150px" class="q-mx-auto">
 							<q-img
-								:src="user ? user.image : '/user-default.png'"
+								:src="
+									user?.avatar
+										? user.avatar
+										: '/user-default.png'
+								"
 								:ratio="1"
 								alt="user"
 								:img-style="{
 									borderRadius: '50%',
 									border: '3px',
-									borderColor: 'green',
+									borderColor: 'brown-7',
 									borderStyle: 'solid',
 								}"
 							/>
@@ -50,15 +54,23 @@
 									<table>
 										<tr>
 											<td
-												class="text-italic text-caption q-pr-sm"
+												class="text-italic text-caption"
 											>
 												Nama
 											</td>
-											<td>{{ user.name }}</td>
+											<td>
+												{{ user.prefix }}
+												{{ user.name
+												}}{{
+													user.suffix
+														? ', ' + user.suffix
+														: ''
+												}}
+											</td>
 										</tr>
 										<tr>
 											<td
-												class="text-italic text-caption q-pr-sm"
+												class="text-italic text-caption"
 											>
 												Email
 											</td>
@@ -66,7 +78,7 @@
 										</tr>
 										<tr>
 											<td
-												class="text-italic text-caption q-pr-sm"
+												class="text-italic text-caption"
 											>
 												Username
 											</td>
@@ -74,9 +86,25 @@
 										</tr>
 										<tr>
 											<td
-												class="text-italic text-caption q-pr-sm"
+												class="text-italic text-caption"
 											>
-												Telepon
+												NIDN
+											</td>
+											<td>{{ user.nidn || '-' }}</td>
+										</tr>
+										<tr>
+											<td
+												class="text-italic text-caption"
+											>
+												Prodi
+											</td>
+											<td>{{ user.prodi || '-' }}</td>
+										</tr>
+										<tr>
+											<td
+												class="text-italic text-caption"
+											>
+												Nomor Telepon
 											</td>
 											<td>{{ user.phone || '-' }}</td>
 										</tr>
@@ -84,7 +112,7 @@
 								</q-item-label>
 							</q-item-section>
 						</q-item>
-						<q-item class="q-pa-sm">
+						<q-item class="q-pa-sm bg-brown-1">
 							<q-item-section>
 								<q-item-label overline>
 									User Status</q-item-label
@@ -100,7 +128,7 @@
 												"
 												label="Verifikasi"
 												disable=""
-												color="green"
+												color="brown-7"
 											/>
 											<div class="q-pl-md text-caption">
 												Verifikasi akun hanya bisa
@@ -117,7 +145,7 @@
 														: false
 												"
 												label="Konfirmasi"
-												color="green"
+												color="brown-7"
 												@update:model-value="
 													confirmUser
 												"
@@ -147,7 +175,7 @@
 										>
 											<q-toggle
 												:model-value="item"
-												color="green"
+												color="brown-7"
 												:label="kebabToTitleCase(index)"
 												@update:model-value="
 													setRole(index, item)
@@ -185,7 +213,6 @@ import { kebabToTitleCase } from 'src/utils/format-text';
 
 const user = ref({});
 const loading = ref(false);
-const loadingImage = ref(false);
 const { params } = useRoute();
 const router = useRouter();
 
@@ -218,13 +245,6 @@ async function loadData() {
 	const data = await apiGet({ endPoint: `users/${params.id}`, loading });
 	user.value = data.user;
 	// console.log(user.value);
-	if (user.value?.id) {
-		const img = await apiGet({
-			endPoint: `images/users/${user.value.id}`,
-			loading: loadingImage,
-		});
-		user.value.image = img.image_url || '/user-default.png';
-	}
 }
 
 async function deleteUser() {

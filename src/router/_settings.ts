@@ -1,5 +1,9 @@
 export default [
 	{
+		path: '',
+		redirect: () => 'settings/users',
+	},
+	{
 		path: 'users',
 		meta: { title: 'Setting: User' },
 		children: [

@@ -31,7 +31,11 @@
 						</div>
 						<div style="max-width: 150px" class="q-mx-auto">
 							<q-img
-								:src="user.image"
+								:src="
+									user?.avatar
+										? user.avatar
+										: '/user-default.png'
+								"
 								:ratio="1"
 								alt="user"
 								:img-style="{
@@ -66,7 +70,15 @@
 											>
 												Nama
 											</td>
-											<td>{{ user.name }}</td>
+											<td>
+												{{ user.prefix }}
+												{{ user.name
+												}}{{
+													user.suffix
+														? ', ' + user.suffix
+														: ''
+												}}
+											</td>
 										</tr>
 										<tr>
 											<td
@@ -88,7 +100,23 @@
 											<td
 												class="text-italic text-caption"
 											>
-												Telepon
+												NIDN
+											</td>
+											<td>{{ user.nidn || '-' }}</td>
+										</tr>
+										<tr>
+											<td
+												class="text-italic text-caption"
+											>
+												Prodi
+											</td>
+											<td>{{ user.prodi || '-' }}</td>
+										</tr>
+										<tr>
+											<td
+												class="text-italic text-caption"
+											>
+												Nomor Telepon
 											</td>
 											<td>{{ user.phone || '-' }}</td>
 										</tr>
@@ -104,7 +132,7 @@
 											no-caps
 											dense
 											class="q-my-xs q-mx-sm q-px-sm"
-											@click="showUserModal"
+											@click="showProfile = true"
 										/>
 									</div>
 									<div class="">
@@ -114,7 +142,7 @@
 											no-caps
 											dense
 											class="q-my-xs q-mx-sm q-px-sm"
-											@click="showUserModal"
+											@click="showUsername = true"
 										/>
 										<q-btn
 											label="Password"
@@ -128,7 +156,7 @@
 								</q-item-label>
 							</q-item-section>
 						</q-item>
-						<q-item class="q-pa-sm">
+						<q-item class="q-pa-sm bg-brown-1">
 							<q-item-section>
 								<q-item-label overline>User Group</q-item-label>
 								<q-item-label>
@@ -142,7 +170,7 @@
 										>
 											<q-toggle
 												:model-value="item"
-												color="brown-9"
+												color="brown-7"
 												:label="titleCase(index)"
 												disable
 											/>
@@ -157,55 +185,26 @@
 		</q-card>
 
 		<!-- MODAL -->
-		<q-dialog v-model="crudShow">
-			<q-card class="full-width" style="max-width: 425px">
-				<q-form @submit.prevent="submit">
-					<q-card-section class="bg-brown-7 text-brown-11 q-pa-sm">
-						Update Username
-					</q-card-section>
-					<q-card-section>
-						<div v-if="loadingCrud">
-							<q-dialog v-model="loadingCrud" persistent="">
-								<q-spinner-cube
-									color="brown-12"
-									size="8em"
-									class="flex q-ma-lg q-mx-auto"
-								/>
-							</q-dialog>
-						</div>
-						<q-input
-							class="q-mt-sm"
-							dense
-							outlined
-							label="Username"
-							v-model="newUser.username"
-							hint="Anda bisa login dengan username atau email"
-						/>
-					</q-card-section>
-					<q-card-actions class="flex bg-brown-6">
-						<q-space />
-						<q-btn
-							label="Tutup"
-							v-close-popup
-							class="bg-brown-11"
-							no-caps=""
-							id="btn-close"
-						/>
-						<q-btn
-							type="submit"
-							label="Simpan"
-							class="bg-brown-10 text-brown-11"
-							no-caps=""
-						/>
-					</q-card-actions>
-				</q-form>
-			</q-card>
+		<q-dialog v-model="showUsername">
+			<CardUsername
+				:is-new="false"
+				:data="user"
+				@success-submit="loadData"
+			/>
+		</q-dialog>
+		<q-dialog v-model="showProfile">
+			<CardProfile
+				:is-new="false"
+				:data="user"
+				@success-submit="loadData"
+			/>
 		</q-dialog>
 		<upload-image
 			:show-uploader="showUploader"
-			:url="`/images/users/${user.id}`"
+			:url="`/user/avatar`"
 			:width="300"
 			:height="300"
+			fieldImage="avatar"
 			img-format="webp"
 			@update-uploader="updateUploader"
 			@success-upload="successUpload"
@@ -215,24 +214,23 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import apiGet from 'src/api/api-get';
-import apiUpdate from 'src/api/api-update';
 import { titleCase } from 'src/utils/format-text';
 import { notifyAlert } from 'src/utils/notify';
 import UploadImage from 'src/components/ImageUploader.vue';
+import CardUsername from './CardUsername.vue';
+import CardProfile from './CardProfile.vue';
 
 const user = ref({});
 const loading = ref(false);
-// const loadingImage = ref(false);
-const crudShow = ref(false);
-const loadingCrud = ref(false);
-const newUser = ref({});
+const showUsername = ref(false);
+const showProfile = ref(false);
 
 const showUploader = ref(false);
 const updateUploader = (val) => (showUploader.value = val);
 
 async function successUpload() {
 	showUploader.value = false;
-	await loadImage();
+	await loadData();
 }
 
 async function loadData() {
@@ -240,39 +238,9 @@ async function loadData() {
 	user.value = data.user;
 }
 
-// async function loadImage() {
-// 	const img = await apiGet({
-// 		endPoint: `images/users/${user.value.id}`,
-// 		loading: loadingImage,
-// 	});
-// 	user.value.image = img.image_url || '/user-default.png';
-// }
 onMounted(async () => {
 	await loadData();
-	// await loadImage();
 });
-
-async function submit() {
-	const response = await apiUpdate({
-		endPoint: 'user',
-		data: {
-			username: newUser.value.username,
-		},
-		confirm: true,
-		notify: true,
-		loading: loadingCrud,
-	});
-	if (response) {
-		document.getElementById('btn-close').click();
-		await loadData();
-		// await loadImage();
-	}
-}
-
-function showUserModal() {
-	Object.assign(newUser.value, user.value);
-	crudShow.value = true;
-}
 
 const changePassword = async () => {
 	await notifyAlert(
