@@ -1,5 +1,5 @@
 const config = {
-	BASE_API: 'http://localhost:8000',
+	BASE_API: 'https://lp2m-api.iaisyaichona.ac.id',
 	END_API: '',
 	PWA_NAME: 'LP2M',
 	PWA_SHORT_NAME: 'LP2M',
