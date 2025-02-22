@@ -13,7 +13,7 @@ async function apiGet({
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
 		const { data } = await api.get(endPoint, { params });
 		if (notify) notifySuccess(data.message);
-		return data;
+		return data.data;
 	} catch (error) {
 		apiError(error);
 		return false;

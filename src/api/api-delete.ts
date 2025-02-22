@@ -17,8 +17,8 @@ async function apiDelete({
 
 	try {
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
-		const response = await api.delete(endPoint, { params });
-		if (notify) notifySuccess(response.data.message);
+		const { data } = await api.delete(endPoint, { params });
+		if (notify) notifySuccess(data.message);
 		return true;
 	} catch (error) {
 		apiError(error);

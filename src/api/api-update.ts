@@ -22,7 +22,7 @@ async function apiUpdate({
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
 		const response = await api.put(endPoint, data, { params });
 		if (notify) notifySuccess(response.data.message);
-		return response.data;
+		return response.data.data;
 	} catch (error) {
 		apiError(error);
 		return false;

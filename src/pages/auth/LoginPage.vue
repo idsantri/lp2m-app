@@ -107,19 +107,15 @@ const submitLogin = async () => {
 			login: login.value,
 			password: password.value,
 		});
-		authState().token = response.data.token;
-		authState().user = response.data.user;
-		authState().roles = response.data.roles;
-		authState().permissions = response.data.permissions;
+		const responseData = response.data;
+		const data = responseData.data;
 
-		notifySuccess(response.data.message);
+		authState().token = data.token;
+		authState().user = data.user;
+		authState().roles = data.roles;
+		authState().permissions = data.permissions;
 
-		// const isConfirmed = response.data.user.confirmed_at;
-		// if (!isConfirmed) {
-		// 	router.push('/profile');
-		// } else {
-		// 	router.push('/');
-		// }
+		notifySuccess(responseData.message);
 		router.push('/');
 	} catch (error) {
 		// console.log('e', error);
