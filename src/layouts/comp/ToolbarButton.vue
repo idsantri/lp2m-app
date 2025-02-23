@@ -26,30 +26,16 @@
 		</q-btn>
 	</div>
 	<div v-else>
-		<q-btn-dropdown
-			flat
-			round
+		<q-btn
+			glossy
 			dense
-			dropdown-icon="more_vert"
-			class="q-pl-md"
-			color="brown-11"
+			to="/logout"
+			class="q-px-md text-weight-light bg-brown-2 text-negative"
+			no-caps
 		>
-			<q-list>
-				<q-item clickable v-close-popup to="/profile">
-					<q-item-section>Profil</q-item-section>
-					<q-item-section avatar>
-						<q-icon color="brown-6" name="3p" />
-					</q-item-section>
-				</q-item>
-
-				<q-item clickable v-close-popup to="/logout">
-					<q-item-section>Keluar</q-item-section>
-					<q-item-section avatar>
-						<q-icon color="red" name="logout" />
-					</q-item-section>
-				</q-item>
-			</q-list>
-		</q-btn-dropdown>
+			Keluar
+			<q-icon name="logout" size="1rem" class="q-ml-sm" />
+		</q-btn>
 	</div>
 </template>
 <script setup>

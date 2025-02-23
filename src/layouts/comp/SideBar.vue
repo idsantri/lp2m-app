@@ -1,72 +1,55 @@
 <template>
 	<q-list class="text-brown-1">
-		<q-item class="q-py-lg" to="/home">
+		<q-item class="" to="/">
+			<q-item-section class="q-py-md">
+				<QItemLabel>
+					<LogoCircle style="margin: auto" :size="75" :border="2" />
+				</QItemLabel>
+				<QItemLabel class="q-mx-auto q-pt-md text-brown-11">
+					<div class="text-center text-weight-bold">
+						{{ config.PWA_NAME }}
+					</div>
+					<div class="text-center text-weight-light">
+						{{ config.PWA_DESCRIPTION }}
+					</div>
+				</QItemLabel>
+				<div v-if="getIsLogin">
+					<QSeparator dark class="q-my-md" />
+					<QItemLabel class="text-center text-body1">
+						{{ getUser.fullName }}
+					</QItemLabel>
+					<QItemLabel class="text-center text-weight-light">
+						{{ getUser.email }}
+					</QItemLabel>
+				</div>
+			</q-item-section>
+		</q-item>
+		<q-separator dark />
+
+		<!-- HOME -->
+		<q-item class="" to="/home">
 			<q-item-section>
-				<LogoCircle style="margin: auto" :size="75" :border="2" />
+				<q-item-label class="text-brown-11">HOME</q-item-label>
 			</q-item-section>
 		</q-item>
 
-		<!-- SEKRETARIAT -->
-		<ExpansionItem
-			label="Sekretariat"
-			caption="Kesantrian"
-			:separator="false"
-		>
-			<MenuItem
-				v-for="item in MenuSekretariat"
-				:key="item.to"
-				:item="item"
-			/>
+		<!-- USER -->
+		<ExpansionItem label="Dashboard" :separator="true">
+			<MenuItem v-for="item in menuUser" :key="item.to" :item="item" />
 		</ExpansionItem>
 
-		<!-- BENDAHARA -->
-		<ExpansionItem label="Bendahara" caption="Iuran">
-			<MenuItem
-				v-for="item in menuBendahara"
-				:key="item.to"
-				:item="item"
-			/>
-		</ExpansionItem>
-
-		<!-- MAKHADIYAH -->
-		<ExpansionItem label="Makhadiyah" caption="Kedaerahan">
-			<MenuItem
-				v-for="item in menuMakhadiyah"
-				:key="item.to"
-				:item="item"
-			/>
-		</ExpansionItem>
-
-		<!-- MADRASAH -->
-		<ExpansionItem label="Madrasah" caption="Kemuridan dan Keguruan">
-			<MenuItem
-				v-for="item in menuMadrasah"
-				:key="item.to"
-				:item="item"
-			/>
-		</ExpansionItem>
-
-		<!-- KEAMANAN -->
-		<ExpansionItem label="Keamanan" caption="Perizinan dan Pelanggaran">
-			<MenuItem
-				v-for="item in menuKeamanan"
-				:key="item.to"
-				:item="item"
-			/>
-		</ExpansionItem>
-
-		<!-- UGT -->
-		<ExpansionItem label="UGT" caption="Urusan Guru Tugas">
-			<MenuItem v-for="item in menuUgt" :key="item.to" :item="item" />
+		<!-- PROJECT -->
+		<ExpansionItem label="Proyek" :separator="true">
+			<MenuItem v-for="item in menuProject" :key="item.to" :item="item" />
 		</ExpansionItem>
 
 		<!-- SETTING -->
-		<ExpansionItem label="Pengaturan" caption="Aplikasi dan Pengguna">
+		<ExpansionItem label="Pengaturan">
 			<MenuItem v-for="item in menuSetting" :key="item.to" :item="item" />
 		</ExpansionItem>
 
 		<!-- INFO -->
-		<ExpansionItem label="Info" caption="Tentang Aplikasi">
+		<ExpansionItem label="Info">
 			<MenuItem v-for="item in menuInfo" :key="item.to" :item="item" />
 		</ExpansionItem>
 	</q-list>
@@ -76,112 +59,39 @@
 import LogoCircle from 'src/components/LogoCircle.vue';
 import ExpansionItem from './ExpansionItem.vue';
 import MenuItem from './MenuItem.vue';
+import config from 'src/config';
+import { storeToRefs } from 'pinia';
+import authStore from 'src/stores/auth-store';
 
-const MenuSekretariat = [
-	{
-		to: '/cari/santri',
-		icon: 'home_work',
-		label: 'Sekretariat',
-		caption: 'Kesantrian',
-		disable: false,
-	},
-];
+const { getIsLogin, getUser } = storeToRefs(authStore());
 
-const menuBendahara = [
+const menuUser = [
 	{
-		to: '/bendahara',
-		icon: 'payments',
-		label: 'Iuran',
-		caption: 'Iuran Santri dan Murid',
-		disable: false,
-	},
-];
-
-const menuMakhadiyah = [
-	{
-		to: '/makhadiyah/mutasi',
-		icon: 'sym_o_follow_the_signs',
-		label: 'Mutasi',
-		caption: 'Mutasi dan Relokasi',
-		disable: false,
-	},
-];
-
-const menuMadrasah = [
-	{
-		to: '/madrasah/murid',
-		icon: 'school',
-		label: 'Murid',
-		caption: 'Data Murid',
+		to: '/user/penelitian',
+		icon: 'dashboard',
+		label: 'Penelitian',
+		caption: 'Proposal dan Laporan Penelitian',
 		disable: false,
 	},
 	{
-		to: '/madrasah/absensi/input/sekolah',
-		icon: 'checklist',
-		label: 'Absensi',
-		caption: 'Sekolah dan Musyawarah',
+		to: '/user/pengabdian',
+		icon: 'dashboard',
+		label: 'Pengabdian',
+		caption: 'Proposal dan Laporan Pengabdian',
 		disable: false,
 	},
 	{
-		to: '/madrasah/nilai-mapel/rerata',
-		icon: 'show_chart',
-		label: 'Nilai',
-		caption: 'Mata Pelajaran & Ahwal',
+		to: '/user/extend',
+		icon: 'dashboard',
+		label: 'Ekstensi',
+		caption: 'Pranala Luar',
 		disable: false,
 	},
 	{
-		to: '/madrasah/aparatur',
-		icon: 'contact_emergency',
-		label: 'Aparatur Madrasah',
-		caption: 'Data Aparatur Madrasah',
-		disable: false,
-	},
-	{
-		to: '/madrasah/rapor-printed',
-		icon: 'sym_o_print_lock',
-		label: 'Rapor',
-		caption: 'Rapor Tercetak',
-		disable: false,
-	},
-];
-
-const menuKeamanan = [
-	{
-		to: '/keamanan/izin-pesantren',
-		icon: 'transfer_within_a_station',
-		label: 'Perizinan',
-		caption: 'Data Perizinan Pesantren',
-		disable: false,
-	},
-	{
-		to: '/keamanan/indisipliner',
-		icon: 'directions_run',
-		label: 'Pelanggaran',
-		caption: 'Data Pelanggaran',
-		disable: false,
-	},
-];
-
-const menuUgt = [
-	{
-		to: '/ugt/pjgt',
-		icon: 'person_2',
-		label: 'PJGT',
-		caption: 'Penanggung Jawab Guru Tugas',
-		disable: false,
-	},
-	{
-		to: '/ugt/gt',
-		icon: 'school',
-		label: 'GT',
-		caption: 'Guru Tugas',
-		disable: false,
-	},
-	{
-		to: '/ugt/kas',
-		icon: 'account_balance_wallet',
-		label: 'Kas',
-		caption: 'Keuangan',
+		to: '/user/profile',
+		icon: 'person',
+		label: 'Profil',
+		caption: 'Data Pengguna',
 		disable: false,
 	},
 ];
@@ -192,6 +102,13 @@ const menuInfo = [
 		icon: 'new_releases',
 		label: 'Release',
 		caption: 'App Version',
+		disable: false,
+	},
+	{
+		to: '/info/about',
+		icon: 'info',
+		label: 'Tentang',
+		caption: 'Tentang Aplikasi',
 		disable: false,
 	},
 ];
@@ -210,6 +127,29 @@ const menuSetting = [
 		label: 'List',
 		caption: 'Auto Complete (Form Isian)',
 		disable: false,
+	},
+];
+const menuProject = [
+	{
+		to: '/',
+		icon: 'dashboard',
+		label: 'Penelitian',
+		caption: 'Proposal dan Laporan',
+		disable: true,
+	},
+	{
+		to: '/',
+		icon: 'dashboard',
+		label: 'Pengabdian',
+		caption: 'Proposal dan Laporan',
+		disable: true,
+	},
+	{
+		to: '/',
+		icon: 'dashboard',
+		label: 'Ekstensi',
+		caption: 'Data Pranala Luar',
+		disable: true,
 	},
 ];
 </script>

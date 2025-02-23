@@ -3,6 +3,7 @@ const config = {
 	END_API: '',
 	PWA_NAME: 'LP2M',
 	PWA_SHORT_NAME: 'LP2M',
-	PWA_DESCRIPTION: 'Aplikasi LP2M IAI Syaichona',
+	PWA_DESCRIPTION:
+		'Laporan Penelitian dan Pengabdian Masyarakat IAI Syaichona',
 };
 export default config;

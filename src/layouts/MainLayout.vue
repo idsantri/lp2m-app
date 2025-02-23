@@ -14,16 +14,24 @@
 				/>
 
 				<q-toolbar-title class="text-brown-11">
-					<span class="text-weight-light text-brown-11">
-						ID Santri:
+					<span class="text-weight-bold">
+						{{ config.PWA_NAME }}:
 					</span>
-					{{ config.PWA_DESCRIPTION }}
+					<span class="text-weight-light">
+						{{ config.PWA_DESCRIPTION }}
+					</span>
 				</q-toolbar-title>
 
 				<ToolbarButton />
 			</q-toolbar>
+			<div
+				class="bg-brown-8 text-brown-2 text-weight-light q-pl-xl dense q-py-sm"
+			>
+				<div class="q-pl-sm text-weight-light">
+					Institut Agama Islam Syaichona Moh Cholil Bangkalan
+				</div>
+			</div>
 		</q-header>
-
 		<q-drawer
 			v-model="leftDrawerOpen"
 			show-if-above
@@ -41,18 +49,19 @@
 				</template>
 			</suspense>
 		</q-drawer>
-
 		<q-page-container :key="componentKey">
-			<suspense>
-				<template #default>
-					<router-view :key="$route.fullPath" />
-				</template>
-				<template #fallback>
-					<div class="spinner">
-						<q-spinner-cube color="brown-8" size="8em" />
-					</div>
-				</template>
-			</suspense>
+			<q-page class="q-pa-sm">
+				<suspense>
+					<template #default>
+						<router-view :key="$route.fullPath" />
+					</template>
+					<template #fallback>
+						<div class="spinner">
+							<q-spinner-cube color="brown-8" size="8em" />
+						</div>
+					</template>
+				</suspense>
+			</q-page>
 		</q-page-container>
 
 		<q-footer bordered class="bg-brown-6 text-brown-12">

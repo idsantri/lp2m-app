@@ -18,7 +18,7 @@
 					outlined
 					label="Awalan"
 					v-model="input.prefix"
-					hint="Gelar akademis"
+					hint="Gelar akademis (singkatan atau akronim)"
 				/>
 				<q-input
 					class="q-mt-sm"
@@ -26,7 +26,7 @@
 					outlined
 					label="Nama Lengkap"
 					v-model="input.name"
-					hint=""
+					hint="Gunakan huruf kapital hanya di awal kata"
 				/>
 				<q-input
 					class="q-mt-sm"
@@ -34,7 +34,7 @@
 					outlined
 					label="Akhiran"
 					v-model="input.suffix"
-					hint="Gelar akademis"
+					hint="Gelar akademis (singkatan atau akronim)"
 				/>
 				<q-input
 					class="q-mt-sm"

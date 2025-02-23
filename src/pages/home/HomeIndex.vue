@@ -1,23 +1,17 @@
 <template>
-	<q-page class="q-pa-sm">
-		<logo-circle
-			:size="150"
-			:border="6"
-			class="q-mx-auto"
-			style="margin-top: 50px"
-		/>
-		<div class="text-center">
-			<div class="text-subtitle1">Selamat Datang</div>
-			<p class="text-brown-10 text-subtitle2 no-margin">
-				di <span class="text-weight-bold">ID Santri</span>
-			</p>
-			<p class="q-mt-sm q-mb-none text-italic">Sistem Informasi</p>
-			<p class="no-margin">
-				{{ config.INS_DESC }}
-				{{ config.INS_NAME }}
-			</p>
-		</div>
-	</q-page>
+	<logo-circle
+		:size="150"
+		:border="6"
+		class="q-mx-auto"
+		style="margin-top: 50px"
+	/>
+	<div class="text-center">
+		<div class="text-subtitle1">Selamat Datang</div>
+		<p class="q-mt-sm q-mb-none">{{ config.PWA_NAME }}</p>
+		<p class="no-margin">
+			{{ config.PWA_DESCRIPTION }}
+		</p>
+	</div>
 </template>
 <script setup>
 import { onMounted } from 'vue';

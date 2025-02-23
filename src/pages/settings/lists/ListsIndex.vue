@@ -1,52 +1,50 @@
 <template>
-	<q-page class="q-pa-sm">
-		<q-card style="max-width: 600px">
-			<q-card-section
-				class="q-pa-sm bg-brown-8 text-brown-11 text-subtitle1 flex"
-			>
-				Input Auto Complete
-				<q-space />
-				<q-btn
-					no-caps
-					label="Kembali"
-					icon="reply"
-					dense
-					class="q-px-md"
-					outline
-					@click="$router.go(-1)"
-				/>
-			</q-card-section>
-			<q-card-section class="q-pa-sm">
-				<q-select
-					dense
-					outlined
-					label="Pilih List"
-					v-model="listModel"
-					:options="options"
-					emit-value
-					map-options
-					@update:model-value="(v) => routerPush(v)"
-					behavior="menu"
-				/>
-			</q-card-section>
-			<q-card-section class="q-pa-sm">
-				<!-- ROUTER -->
-				<q-card v-if="listModel" class="">
-					<router-view :key="$route.fullPath" />
-				</q-card>
+	<q-card style="max-width: 600px">
+		<q-card-section
+			class="q-pa-sm bg-brown-8 text-brown-11 text-subtitle1 flex"
+		>
+			Input Auto Complete
+			<q-space />
+			<q-btn
+				no-caps
+				label="Kembali"
+				icon="reply"
+				dense
+				class="q-px-md"
+				outline
+				@click="$router.go(-1)"
+			/>
+		</q-card-section>
+		<q-card-section class="q-pa-sm">
+			<q-select
+				dense
+				outlined
+				label="Pilih List"
+				v-model="listModel"
+				:options="options"
+				emit-value
+				map-options
+				@update:model-value="(v) => routerPush(v)"
+				behavior="menu"
+			/>
+		</q-card-section>
+		<q-card-section class="q-pa-sm">
+			<!-- ROUTER -->
+			<q-card v-if="listModel" class="">
+				<router-view :key="$route.fullPath" />
+			</q-card>
 
-				<q-card v-else class="">
-					<q-card-section
-						class="bg-brown-1 text-center text-italic text-subtitle1 q-pa-lg"
-					>
-						Silakan pilih lists yang tersedia!
-					</q-card-section>
-				</q-card>
-			</q-card-section>
-		</q-card>
-		<!-- <pre>list model:{{ listModel }}</pre> -->
-		<!-- <pre>list data:{{ listData }}</pre> -->
-	</q-page>
+			<q-card v-else class="">
+				<q-card-section
+					class="bg-brown-1 text-center text-italic text-subtitle1 q-pa-lg"
+				>
+					Silakan pilih lists yang tersedia!
+				</q-card-section>
+			</q-card>
+		</q-card-section>
+	</q-card>
+	<!-- <pre>list model:{{ listModel }}</pre> -->
+	<!-- <pre>list data:{{ listData }}</pre> -->
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';

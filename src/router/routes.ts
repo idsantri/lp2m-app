@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 import _auth from './_auth';
 import _info from './_info';
 import _settings from './_settings';
+import _user from './_user';
 
 const routes: RouteRecordRaw[] = [
 	// layout auth
@@ -33,9 +34,9 @@ const routes: RouteRecordRaw[] = [
 				children: _settings,
 			},
 			{
-				path: 'profile',
-				component: () => import('src/pages/profile/ProfileIndex.vue'),
-				meta: { title: 'User Profile' },
+				path: 'user',
+				meta: { title: 'User' },
+				children: _user,
 			},
 		],
 	},

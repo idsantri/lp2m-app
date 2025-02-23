@@ -9,7 +9,18 @@ const authStore = defineStore('auth', {
 	}),
 
 	getters: {
-		getUser: (state) => state.user,
+		getUser: (state) => ({
+			...state.user,
+			fullName: [
+				state.user?.prefix,
+				state.user?.name,
+				state.user?.suffix ? `, ${state.user?.suffix}` : '',
+			]
+				.filter(Boolean)
+				.join(' ')
+				.trim()
+				.replace(/\s+,/g, ','), // Menghapus spasi sebelum koma
+		}),
 		getToken: (state) => state.token,
 		getRoles: (state) => state.roles,
 		getPermissions: (state) => state.permissions,
@@ -22,6 +33,10 @@ const authStore = defineStore('auth', {
 			if (payload.permissions) this.permissions = payload.permissions;
 			if (payload.user) this.user = payload.user;
 			if (payload.token) this.token = payload.token;
+		},
+
+		updateUser(user) {
+			this.user = user;
 		},
 
 		clearUser() {
