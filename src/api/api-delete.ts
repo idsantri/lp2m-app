@@ -9,6 +9,7 @@ async function apiDelete({
 	params,
 	loading,
 	notify = true,
+	config,
 }: DeleteParams): Promise<boolean> {
 	const isConfirmed = await notifyConfirm(message, true);
 	if (!isConfirmed) {
@@ -17,7 +18,11 @@ async function apiDelete({
 
 	try {
 		if (loading && typeof loading.value === 'boolean') loading.value = true;
-		const { data } = await api.delete(endPoint, { params });
+
+		const configApi = { ...config };
+		if (params) configApi.params = params;
+		const { data } = await api.delete(endPoint, configApi);
+
 		if (notify) notifySuccess(data.message);
 		return true;
 	} catch (error) {

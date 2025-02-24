@@ -1,6 +1,6 @@
 <template>
 	<q-card-section
-		class="bg-brown-7 text-brown-11 text-subtitle1 q-pa-sm flex flex-center"
+		class="bg-brown-6 text-brown-11 text-subtitle1 q-pa-sm flex flex-center"
 	>
 		{{ selected?.label || 'List' }}
 		<q-space />

@@ -1,11 +1,6 @@
 <template lang="">
 	<q-card class="" style="max-width: 600px">
-		<q-card-section class="bg-brown-7 text-brown-11 q-pa-sm">
-			<div class="flex items-center">
-				<div class="text-subtitle2">Profil Pengguna</div>
-				<q-space />
-			</div>
-		</q-card-section>
+		<CardHeader>Profil Pengguna</CardHeader>
 
 		<q-card-section class="q-pa-sm">
 			<div v-if="loading">
@@ -196,6 +191,7 @@ import UploadImage from 'src/components/ImageUploader.vue';
 import CardUsername from './CardUsername.vue';
 import CardProfile from './CardProfile.vue';
 import authStore from 'src/stores/auth-store';
+import CardHeader from 'src/components/CardHeader.vue';
 
 const user = ref({});
 const loading = ref(false);

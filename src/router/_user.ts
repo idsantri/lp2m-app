@@ -13,6 +13,10 @@ export default [
 		component: () => import('src/pages/user/penelitian/IndexPage.vue'),
 	},
 	{
+		path: 'penelitian/:id',
+		component: () => import('src/pages/user/penelitian/ById.vue'),
+	},
+	{
 		path: 'pengabdian',
 		component: () => import('src/pages/user/pengabdian/IndexPage.vue'),
 	},

@@ -1,20 +1,6 @@
 <template lang="">
 	<q-card class="" style="max-width: 600px">
-		<q-card-section class="bg-brown-7 text-brown-11 q-pa-sm">
-			<div class="flex items-center">
-				<div class="text-subtitle2">Profil Pengguna</div>
-				<q-space />
-				<q-btn
-					no-caps
-					label="Kembali"
-					icon="reply"
-					dense
-					class="q-px-md"
-					outline
-					@click="$router.go(-1)"
-				/>
-			</div>
-		</q-card-section>
+		<CardHeader>Profil Pengguna</CardHeader>
 
 		<q-card-section class="q-pa-sm">
 			<div v-if="loading">
@@ -187,6 +173,7 @@ import apiGet from 'src/api/api-get';
 import apiUpdate from 'src/api/api-update';
 import apiDelete from 'src/api/api-delete';
 import { kebabToTitleCase } from 'src/utils/format-text';
+import CardHeader from 'src/components/CardHeader.vue';
 
 const user = ref({});
 const loading = ref(false);

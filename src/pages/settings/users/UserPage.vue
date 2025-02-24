@@ -1,20 +1,7 @@
 <template>
 	<q-card>
-		<q-card-section
-			class="q-pa-sm bg-brown-8 text-brown-11 text-subtitle1 flex"
-		>
-			Data Pengguna
-			<q-space />
-			<q-btn
-				no-caps
-				label="Kembali"
-				icon="reply"
-				dense
-				class="q-px-md"
-				outline
-				@click="$router.go(-1)"
-			/>
-		</q-card-section>
+		<CardHeader>Data Pengguna</CardHeader>
+
 		<q-table
 			class="q-px-sm"
 			:rows="users"
@@ -50,6 +37,7 @@
 <script setup>
 import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
+import CardHeader from 'src/components/CardHeader.vue';
 
 const filter = ref('');
 const loading = ref(false);

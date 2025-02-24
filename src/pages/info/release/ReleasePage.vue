@@ -43,10 +43,16 @@ import config from 'src/config';
 
 const releases = [
 	{
-		ver: '1.2.5',
-		date: 'Januari 2025',
+		ver: '1.0.0',
+		date: 'Maret 2025',
 		release: {
-			'Fitur Baru': ['Setting App Wali Santri'],
+			'New Release': [
+				'Autentikasi',
+				'User Management',
+				'Penelitian',
+				'Pengabdian',
+				'Info Luring',
+			],
 		},
 	},
 ];

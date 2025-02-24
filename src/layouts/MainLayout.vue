@@ -25,11 +25,9 @@
 				<ToolbarButton />
 			</q-toolbar>
 			<div
-				class="bg-brown-8 text-brown-2 text-weight-light q-pl-xl dense q-py-sm"
+				class="bg-brown-8 text-brown-2 text-weight-light q-pl-md q-py-sm"
 			>
-				<div class="q-pl-sm text-weight-light">
-					Institut Agama Islam Syaichona Moh Cholil Bangkalan
-				</div>
+				Institut Agama Islam Syaichona Moh Cholil Bangkalan
 			</div>
 		</q-header>
 		<q-drawer

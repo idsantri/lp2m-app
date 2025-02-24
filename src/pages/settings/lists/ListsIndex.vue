@@ -1,20 +1,6 @@
 <template>
 	<q-card style="max-width: 600px">
-		<q-card-section
-			class="q-pa-sm bg-brown-8 text-brown-11 text-subtitle1 flex"
-		>
-			Input Auto Complete
-			<q-space />
-			<q-btn
-				no-caps
-				label="Kembali"
-				icon="reply"
-				dense
-				class="q-px-md"
-				outline
-				@click="$router.go(-1)"
-			/>
-		</q-card-section>
+		<CardHeader>Input Auto Complete</CardHeader>
 		<q-card-section class="q-pa-sm">
 			<q-select
 				dense
@@ -50,6 +36,7 @@
 import { onMounted, ref } from 'vue';
 import listData from './lists-data';
 import { useRoute, useRouter } from 'vue-router';
+import CardHeader from 'src/components/CardHeader.vue';
 
 const router = useRouter();
 const { params } = useRoute();

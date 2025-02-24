@@ -9,18 +9,19 @@ const authStore = defineStore('auth', {
 	}),
 
 	getters: {
-		getUser: (state) => ({
-			...state.user,
-			fullName: [
-				state.user?.prefix,
-				state.user?.name,
-				state.user?.suffix ? `, ${state.user?.suffix}` : '',
-			]
-				.filter(Boolean)
-				.join(' ')
-				.trim()
-				.replace(/\s+,/g, ','), // Menghapus spasi sebelum koma
-		}),
+		// getUser: (state) => ({
+		// 	...state.user,
+		// 	fullName: [
+		// 		state.user?.prefix,
+		// 		state.user?.name,
+		// 		state.user?.suffix ? `, ${state.user?.suffix}` : '',
+		// 	]
+		// 		.filter(Boolean)
+		// 		.join(' ')
+		// 		.trim()
+		// 		.replace(/\s+,/g, ','), // Menghapus spasi sebelum koma
+		// }),
+		getUser: (state) => state.user,
 		getToken: (state) => state.token,
 		getRoles: (state) => state.roles,
 		getPermissions: (state) => state.permissions,

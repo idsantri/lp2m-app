@@ -78,14 +78,14 @@ const menuUser = [
 		icon: 'dashboard',
 		label: 'Pengabdian',
 		caption: 'Proposal dan Laporan Pengabdian',
-		disable: false,
+		disable: true,
 	},
 	{
 		to: '/user/extend',
 		icon: 'dashboard',
 		label: 'Ekstensi',
 		caption: 'Pranala Luar',
-		disable: false,
+		disable: true,
 	},
 	{
 		to: '/user/profile',
