@@ -2,12 +2,12 @@
   "id": "lp2m-app",
   "name": "LP2M",
   "short_name": "LP2M",
-  "description": "Aplikasi LP2M IAI Syaichona",
+  "description": "Laporan Penelitian dan Pengabdian Masyarakat IAI Syaichona",
   "display": "standalone",
   "start_url": "/",
   "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#1b5e20",
+  "theme_color": "#3e2723",
   "icons": [
     {
       "src": "icons/icon-128x128.png",
