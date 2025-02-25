@@ -42,8 +42,8 @@
 								<q-avatar>
 									<img
 										:src="
-											user?.avatar
-												? user.avatar
+											user?.avatar_url
+												? user.avatar_url
 												: '/user-default.png'
 										"
 									/>
@@ -61,22 +61,75 @@
 						</q-item>
 					</q-list>
 				</q-card>
-
 				<q-card bordered flat class="q-mt-sm">
-					<q-card-section
+					<q-tabs
+						v-model="tab"
+						dense
+						class="text-brown-1 bg-brown-5"
+						active-color="brown-1"
+						active-bg-color="brown-7"
+						indicator-color="brown-11"
+						align="justify"
+						narrow-indicator
+					>
+						<q-tab name="subject" label="Subyek" no-caps />
+						<q-tab name="proposal" label="Proposal" no-caps />
+						<q-tab name="laporan" label="Laporan" no-caps />
+					</q-tabs>
+
+					<q-separator />
+
+					<q-tab-panels v-model="tab" animated>
+						<q-tab-panel name="subject" class="q-pa-sm">
+							<div class="text-subtitle1 q-pl-md">
+								Detail Penelitian
+							</div>
+							<q-separator />
+							<by-id-penelitian
+								:penelitian="penelitian"
+								@success-submit-proposal="loadData"
+								@success-delete-proposal="loadData"
+								@success-submit-laporan="loadData"
+								@success-delete-laporan="loadData"
+							/>
+						</q-tab-panel>
+
+						<q-tab-panel name="proposal" class="q-pa-sm">
+							<div class="text-subtitle1 q-pl-md">
+								Riwayat Proposal
+							</div>
+							<pre>
+								{{ proposal }}
+							</pre
+							>
+						</q-tab-panel>
+
+						<q-tab-panel name="laporan" class="q-pa-sm">
+							<div class="text-subtitle1 q-pl-md">
+								Riwayat Laporan
+							</div>
+							<pre>
+								{{ laporan }}
+							</pre
+							>
+						</q-tab-panel>
+					</q-tab-panels>
+
+					<!-- <q-card-section
 						header
 						class="q-py-sm bg-brown-1 text-brown-10"
 					>
 						Subjek Penelitian
 					</q-card-section>
 
-					<ByIdPenelitian
+					<by-id-penelitian
 						:penelitian="penelitian"
 						@success-submit-proposal="loadData"
 						@success-delete-proposal="loadData"
 						@success-submit-laporan="loadData"
 						@success-delete-laporan="loadData"
-					/>
+					/> -->
+					<!-- <pre>parent{{ penelitian }}</pre> -->
 				</q-card>
 			</div>
 		</q-card-section>
@@ -104,7 +157,7 @@ const laporan = ref([]);
 const user = ref({});
 const { params } = useRoute();
 const crud = ref(false);
-
+const tab = ref('subject');
 async function loadData() {
 	const data = await apiGet({
 		endPoint: `user/penelitian/${params.id}`,

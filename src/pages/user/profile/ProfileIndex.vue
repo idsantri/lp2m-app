@@ -26,7 +26,9 @@
 					<div style="max-width: 150px" class="q-mx-auto">
 						<q-img
 							:src="
-								user?.avatar ? user.avatar : '/user-default.png'
+								user?.avatar_url
+									? user.avatar_url
+									: '/user-default.png'
 							"
 							:ratio="1"
 							alt="user"

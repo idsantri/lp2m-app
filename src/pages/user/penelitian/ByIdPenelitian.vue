@@ -44,7 +44,8 @@
 						icon="delete"
 						dense
 						color="negative"
-						@click="null"
+						@click="deleteFile('proposal')"
+						:disable="!penelitian.file_proposal"
 					/>
 					<q-btn
 						outline
@@ -91,8 +92,9 @@
 						icon="delete"
 						dense
 						color="negative"
-						@click="null"
+						@click="deleteFile('laporan')"
 						class="q-mr-md"
+						:disable="!penelitian.file_laporan"
 					/>
 					<q-btn
 						outline
@@ -123,26 +125,26 @@
 			</tr>
 		</tbody>
 	</q-markup-table>
+	<!-- <pre>child{{ penelitian }}</pre> -->
 </template>
 <script setup>
 import { formatDate } from 'src/utils/format-date';
 import InputFile from 'src/components/InputFile.vue';
 import { notifyError } from 'src/utils/notify';
-import { nextTick, ref } from 'vue';
+import { ref } from 'vue';
 import apiPost from 'src/api/api-post';
+import apiDelete from 'src/api/api-delete';
+
 const emit = defineEmits([
 	'successSubmitProposal',
 	'successDeleteProposal',
 	'successSubmitLaporan',
 	'successDeleteLaporan',
 ]);
+
 const props = defineProps({
-	penelitian: {
-		type: Object,
-		required: true,
-	},
+	penelitian: { type: Object, required: true },
 });
-const { penelitian } = props;
 
 const inputProposal = ref(false);
 const loadingProposal = ref(false);
@@ -153,18 +155,10 @@ const loadingLaporan = ref(false);
 const fileLaporan = ref(null);
 
 function getLastPartOfURL(url) {
-	return url.split('/').pop();
+	return url.split('~').pop();
 }
 
 const uploadFile = async (type) => {
-	// DO NOT DELETE: perlu conlose log untuk memantik penelitian.id
-	console.log('🚀 ~ uploadFile ~ penelitian.id:', penelitian.id);
-	await nextTick(); // Menunggu Vue memperbarui nilai reaktif
-	if (!penelitian || !penelitian.id) {
-		notifyError('Error next tick!');
-		return;
-	}
-
 	const file = type === 'proposal' ? fileProposal.value : fileLaporan.value;
 	if (!file) {
 		notifyError(`Pilih file ${type}!`);
@@ -175,7 +169,7 @@ const uploadFile = async (type) => {
 	formData.append('file', file);
 
 	const response = await apiPost({
-		endPoint: `user/penelitian/${penelitian.id}/upload/${type}`,
+		endPoint: `user/penelitian/${props.penelitian.id}/upload/${type}`,
 		data: formData,
 		loading: type === 'proposal' ? loadingProposal : loadingLaporan,
 		config: {
@@ -195,6 +189,20 @@ const uploadFile = async (type) => {
 		}
 	}
 };
-console.log('🚀 ~ uploadFile ~ penelitian.id:', penelitian.id);
+
+const deleteFile = async (type) => {
+	const response = await apiDelete({
+		endPoint: `user/penelitian/${props.penelitian.id}/delete/${type}`,
+		loading: type === 'proposal' ? loadingProposal : loadingLaporan,
+		message: `Hapus file ${type} ini?`,
+	});
+	if (response) {
+		if (type === 'proposal') {
+			emit('successDeleteProposal');
+		} else {
+			emit('successDeleteLaporan');
+		}
+	}
+};
 </script>
 <style lang=""></style>
