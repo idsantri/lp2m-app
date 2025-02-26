@@ -1,8 +1,8 @@
 {
   "id": "lp2m-app",
-  "name": "LP2M",
+  "name": "LP2M IAI Syaichona",
   "short_name": "LP2M",
-  "description": "Laporan Penelitian dan Pengabdian Masyarakat IAI Syaichona",
+  "description": "Lembaga Penelitian dan Pengabdian Masyarakat",
   "display": "standalone",
   "start_url": "/",
   "orientation": "portrait",
