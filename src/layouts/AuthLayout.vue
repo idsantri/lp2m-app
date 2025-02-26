@@ -4,28 +4,8 @@
 			<q-page class="flex flex-center">
 				<q-card class="my-card q-pa-lg bg-brown-5 text-brown-1">
 					<q-card-section class="no-padding q-mb-md">
-						<div
-							v-if="!isPwaInstalled && isMobile()"
-							class="absolute-top-left"
-							title="Install aplikasi untuk mendapatkan pengalaman yang lebih baik"
-						>
-							<q-btn
-								v-if="isAndroid()"
-								icon="install_mobile"
-								round
-								class="text-brown-10 bg-brown-13"
-								glossy
-								@click="installPwa"
-							/>
-							<q-btn
-								v-if="isIos()"
-								icon="install_mobile"
-								round
-								class="text-brown-10 bg-brown-13"
-								glossy
-								@click="clickIos"
-							/>
-						</div>
+						<info-pwa />
+
 						<logo-circle
 							:size="100"
 							:border="3"
@@ -33,12 +13,10 @@
 						/>
 
 						<div class="container-title">
-							<h1 class="title text-brown-10">ID Santri</h1>
-							<p class="sub1">Sistem Informasi</p>
-							<p class="sub2">
-								{{ config.INS_DESC }}
-								{{ config.INS_NAME }}
-							</p>
+							<h1 class="title text-brown-10">
+								{{ config.PWA_SHORT_NAME }}
+							</h1>
+							<p class="sub1">{{ config.PWA_INS }}</p>
 						</div>
 						<q-separator dark />
 						<h3 class="sub-title">{{ title }}</h3>
@@ -65,11 +43,6 @@
 					</q-card-section>
 				</q-card>
 			</q-page>
-
-			<!-- INSTALL PWA -->
-			<q-dialog v-model="modalIos">
-				<info-ios />
-			</q-dialog>
 		</q-page-container>
 	</q-layout>
 </template>
@@ -78,67 +51,13 @@
 import { ref } from 'vue';
 import config from 'src/config';
 import LogoCircle from 'components/LogoCircle.vue';
-import InfoIos from './comp/InfoIos.vue';
+import InfoPwa from './comp/InfoPwa.vue';
 
 const title = ref('Autentikasi');
 const handleTitle = (value) => (title.value = value);
 const errors = ref([]);
 const handleErrors = (value) => (errors.value = value);
-const modalIos = ref(false);
 const credential = ref({});
-
-/**
- * -----------------------------------------
- * PWA
- * -----------------------------------------
- */
-
-const getOS = () => {
-	const userAgent = window.navigator.userAgent;
-	const osList = [
-		{ regex: /windows/i, name: 'Windows' },
-		{ regex: /android/i, name: 'Android' },
-		{ regex: /(iphone|ipad|ipod)/i, name: 'iOS' },
-		{ regex: /linux/i, name: 'Linux' },
-		{ regex: /mac/i, name: 'Mac/iOS' },
-	];
-
-	return (
-		osList.find(({ regex }) => regex.test(userAgent))?.name || 'Unknown OS'
-	);
-};
-const isIos = () => getOS() === 'iOS';
-const isAndroid = () => getOS() === 'Android';
-const isMobile = () => isIos() || isAndroid();
-
-const deferredPrompt = ref(null);
-window.addEventListener('beforeinstallprompt', (e) => {
-	e.preventDefault();
-	deferredPrompt.value = e;
-});
-
-const isPwaInstalled = ref(
-	window.matchMedia('(display-mode: standalone)').matches,
-);
-
-const installPwa = () => {
-	if (deferredPrompt.value) {
-		deferredPrompt.value.prompt();
-		deferredPrompt.value.userChoice.then((choiceResult) => {
-			if (choiceResult.outcome === 'accepted') {
-				console.log('User accepted the A2HS prompt');
-			} else {
-				console.log('User dismissed the A2HS prompt');
-			}
-		});
-		// reset
-		deferredPrompt.value = null;
-	}
-};
-
-const clickIos = () => {
-	modalIos.value = true;
-};
 </script>
 
 <style scoped>
@@ -153,10 +72,10 @@ const clickIos = () => {
 }
 .sub1 {
 	text-align: center;
-	font-size: 1rem;
+	font-size: 0.9rem;
 	margin: 0;
 	font-weight: 300;
-	letter-spacing: 5px;
+	letter-spacing: 2px;
 }
 .sub2 {
 	text-align: center;
@@ -181,6 +100,7 @@ const clickIos = () => {
 }
 
 .container-title {
+	margin-top: 10px;
 	margin-bottom: 10px;
 }
 </style>
