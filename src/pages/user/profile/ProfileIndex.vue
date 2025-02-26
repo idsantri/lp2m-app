@@ -98,6 +98,12 @@
 									</tr>
 									<tr>
 										<td class="text-italic text-caption">
+											Kampus
+										</td>
+										<td>{{ user.nama_kampus || '-' }}</td>
+									</tr>
+									<tr>
+										<td class="text-italic text-caption">
 											Nomor Telepon
 										</td>
 										<td>{{ user.phone || '-' }}</td>
@@ -210,8 +216,10 @@ async function successUpload() {
 
 async function loadData() {
 	const data = await apiGet({ endPoint: 'user', loading });
-	user.value = data.user;
-	auth.updateUser(data.user);
+	if (data) {
+		user.value = data.user;
+		auth.updateUser(data.user);
+	}
 }
 
 onMounted(async () => {

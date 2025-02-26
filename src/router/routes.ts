@@ -3,6 +3,7 @@ import _auth from './_auth';
 import _info from './_info';
 import _settings from './_settings';
 import _user from './_user';
+import _penelitian from './_penelitian';
 
 const routes: RouteRecordRaw[] = [
 	// layout auth
@@ -22,6 +23,11 @@ const routes: RouteRecordRaw[] = [
 				path: 'home',
 				component: () => import('src/pages/home/HomeIndex.vue'),
 				meta: { title: 'Home' },
+			},
+			{
+				path: 'penelitian',
+				meta: { title: 'Penelitian' },
+				children: _penelitian,
 			},
 			{
 				path: 'info',

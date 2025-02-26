@@ -6,12 +6,11 @@
 			<template v-slot:action>
 				<q-btn
 					no-caps
-					label="Edit"
-					icon="edit"
+					icon="sync"
 					dense
-					class="q-px-md q-mr-sm"
+					class="q-px-sm q-mr-sm"
 					outline
-					@click="crud = true"
+					@click="loadData"
 				/>
 			</template>
 		</CardHeader>
@@ -81,11 +80,23 @@
 
 					<q-tab-panels v-model="tab" animated>
 						<q-tab-panel name="subject" class="q-pa-sm">
-							<div class="text-subtitle1 q-pl-md">
-								Detail Penelitian
+							<div
+								class="bg-brown-11 q-pa-sm flex items-center justify-between"
+							>
+								<div class="text-subtitle1 q-ml-sm">
+									Detail Penelitian
+								</div>
+								<q-btn
+									no-caps
+									label="Edit"
+									icon="edit"
+									dense
+									class="q-px-md q-mr-sm"
+									outline
+									@click="crudPenelitian = true"
+								/>
 							</div>
-							<q-separator />
-							<by-id-penelitian
+							<TabPenelitian
 								:penelitian="penelitian"
 								@success-submit-proposal="loadData"
 								@success-delete-proposal="loadData"
@@ -95,46 +106,18 @@
 						</q-tab-panel>
 
 						<q-tab-panel name="proposal" class="q-pa-sm">
-							<div class="text-subtitle1 q-pl-md">
-								Riwayat Proposal
-							</div>
-							<pre>
-								{{ proposal }}
-							</pre
-							>
+							<TabProposal :proposal="proposal" />
 						</q-tab-panel>
 
 						<q-tab-panel name="laporan" class="q-pa-sm">
-							<div class="text-subtitle1 q-pl-md">
-								Riwayat Laporan
-							</div>
-							<pre>
-								{{ laporan }}
-							</pre
-							>
+							<TabLaporan :laporan="laporan" />
 						</q-tab-panel>
 					</q-tab-panels>
-
-					<!-- <q-card-section
-						header
-						class="q-py-sm bg-brown-1 text-brown-10"
-					>
-						Subjek Penelitian
-					</q-card-section>
-
-					<by-id-penelitian
-						:penelitian="penelitian"
-						@success-submit-proposal="loadData"
-						@success-delete-proposal="loadData"
-						@success-submit-laporan="loadData"
-						@success-delete-laporan="loadData"
-					/> -->
-					<!-- <pre>parent{{ penelitian }}</pre> -->
 				</q-card>
 			</div>
 		</q-card-section>
 	</q-card>
-	<q-dialog v-model="crud">
+	<q-dialog v-model="crudPenelitian">
 		<CrudPenelitian
 			:data="penelitian"
 			@success-submit="(r) => (penelitian = r)"
@@ -147,27 +130,34 @@ import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import CardHeader from 'src/components/CardHeader.vue';
-import CrudPenelitian from './CrudPenelitian.vue';
-import ByIdPenelitian from './ByIdPenelitian.vue';
+import TabPenelitian from './TabPenelitian.vue';
+import TabProposal from './TabProposal.vue';
+import TabLaporan from './TabLaporan.vue';
 
+import CrudPenelitian from 'src/views/CrudPenelitian.vue';
+
+const { params } = useRoute();
 const loading = ref(false);
 const penelitian = ref({});
 const proposal = ref([]);
 const laporan = ref([]);
 const user = ref({});
-const { params } = useRoute();
-const crud = ref(false);
 const tab = ref('subject');
+
+const crudPenelitian = ref(false);
+
 async function loadData() {
 	const data = await apiGet({
-		endPoint: `user/penelitian/${params.id}`,
+		endPoint: `penelitian/${params.id}`,
 		loading,
 	});
-	// console.log('🚀 ~ loadData ~ data:', data)
-	penelitian.value = data.penelitian;
-	proposal.value = data.proposal;
-	laporan.value = data.laporan;
-	user.value = data.user;
+	if (data) {
+		// console.log('🚀 ~ loadData ~ data:', data)
+		penelitian.value = data.penelitian;
+		proposal.value = data.proposal;
+		laporan.value = data.laporan;
+		user.value = data.user;
+	}
 }
 
 onMounted(async () => {

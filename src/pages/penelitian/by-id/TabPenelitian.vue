@@ -4,7 +4,7 @@
 			<tr>
 				<td class="">Tanggal Buat</td>
 				<td class="">
-					{{ formatDate(penelitian.cr_at, 'dd MMMM yyyy') }}
+					{{ formatDate(penelitian.created_at, 'dd MMMM yyyy') }}
 				</td>
 				<td></td>
 			</tr>
@@ -169,7 +169,7 @@ const uploadFile = async (type) => {
 	formData.append('file', file);
 
 	const response = await apiPost({
-		endPoint: `user/penelitian/${props.penelitian.id}/upload/${type}`,
+		endPoint: `penelitian/${props.penelitian.id}/upload/${type}`,
 		data: formData,
 		loading: type === 'proposal' ? loadingProposal : loadingLaporan,
 		config: {
@@ -192,7 +192,7 @@ const uploadFile = async (type) => {
 
 const deleteFile = async (type) => {
 	const response = await apiDelete({
-		endPoint: `user/penelitian/${props.penelitian.id}/delete/${type}`,
+		endPoint: `penelitian/${props.penelitian.id}/delete/${type}`,
 		loading: type === 'proposal' ? loadingProposal : loadingLaporan,
 		message: `Hapus file ${type} ini?`,
 	});

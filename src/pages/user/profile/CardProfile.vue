@@ -49,8 +49,14 @@
 					url="prodi"
 					label="Prodi *"
 					class="q-mt-sm"
-					:rules="[(val) => !!val || 'Harus diisi!']"
 					:btn-setting="false"
+				/>
+				<q-input
+					class="q-mt-sm"
+					dense
+					outlined
+					label="Nama Kampus"
+					v-model="input.nama_kampus"
 				/>
 				<q-input
 					class="q-mt-sm"
@@ -107,6 +113,7 @@ async function onSubmit() {
 		suffix: input.value.suffix,
 		nidn: input.value.nidn,
 		prodi: input.value.prodi,
+		nama_kampus: input.value.nama_kampus,
 		phone: input.value.phone,
 	};
 

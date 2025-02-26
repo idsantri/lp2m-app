@@ -93,7 +93,9 @@ async function getUsers() {
 		endPoint: 'users',
 		loading: loading,
 	});
-	users.value = data.users;
+	if (data) {
+		users.value = data.users;
+	}
 	// console.log(users.value);
 }
 

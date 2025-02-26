@@ -2,8 +2,8 @@
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
 			<FormHeader
-				title="Input Penelitian"
-				:is-new="props.data.id ? true : false"
+				title="Input Riwayat Proposal"
+				:is-new="props?.data?.id ? false : true"
 			/>
 			<q-card-section>
 				<div v-if="loadingCrud">
@@ -15,34 +15,26 @@
 						/>
 					</q-dialog>
 				</div>
-				<q-input
+				<InputSelectArray
+					v-model="input.status"
+					url="status-review"
+					label="Status"
 					class="q-mt-sm"
-					dense
-					outlined
-					label="Judul"
-					v-model="input.judul"
-					hint="Tidak boleh sama dengan judul yang sudah ada"
-				/>
-				<q-input
-					class="q-mt-sm"
-					dense
-					outlined
-					label="Anggota"
-					v-model="input.anggota"
-					hint="Selain Anda sendiri jika ada. Jika lebih dari 1 maka pisahkan dengan titik koma (;)"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+					:btn-setting="false"
 				/>
 				<q-input
 					class="q-mt-lg"
 					dense
 					outlined
-					label="Deskripsi"
-					v-model="input.deskripsi"
+					label="Keterangan"
+					v-model="input.keterangan"
 					type="textarea"
 				/>
 			</q-card-section>
 
 			<FormActions
-				:btn-delete="props.data.id ? true : false"
+				:btn-delete="props?.data?.id ? true : false"
 				@onDelete="handleDelete"
 			/>
 		</q-form>
@@ -55,50 +47,65 @@ import FormHeader from 'src/components/FormHeader.vue';
 import FormActions from 'src/components/FormActions.vue';
 import apiPost from 'src/api/api-post';
 import apiDelete from 'src/api/api-delete';
+import InputSelectArray from 'src/components/InputSelectArray.vue';
+import { useRoute } from 'vue-router';
+
 const props = defineProps({
 	data: Object,
 });
-const emit = defineEmits(['successSubmit', 'successDelete']);
+const emit = defineEmits([
+	'successAdd',
+	'successEdit',
+	'successSubmit',
+	'successDelete',
+]);
+const { params } = useRoute();
 
 const input = ref({});
 const loadingCrud = ref(false);
 async function onSubmit() {
 	const data = {
-		judul: input.value.judul,
-		deskripsi: input.value.deskripsi,
-		anggota: input.value.anggota,
+		penelitian_id: params.id,
+		status: input.value.status,
+		keterangan: input.value.keterangan,
 	};
 
 	let response = null;
 	if (input.value.id) {
 		response = await apiUpdate({
-			endPoint: `user/penelitian/${input.value.id}`,
+			endPoint: `penelitian/proposal/${input.value.id}`,
 			data,
 			confirm: true,
 			notify: true,
 			loading: loadingCrud,
 		});
+		if (response) {
+			document.getElementById('btn-close-crud').click();
+			emit('successEdit', response.proposal);
+			emit('successSubmit', response.proposal);
+		}
 	} else {
 		response = await apiPost({
-			endPoint: 'user/penelitian',
+			endPoint: 'penelitian/proposal',
 			data,
 			notify: true,
 			loading: loadingCrud,
 		});
-	}
-
-	if (response) {
-		document.getElementById('btn-close-crud').click();
-		emit('successSubmit', response.penelitian);
+		if (response) {
+			document.getElementById('btn-close-crud').click();
+			emit('successAdd', response.proposal);
+			emit('successSubmit', response.proposal);
+		}
 	}
 }
 const handleDelete = async () => {
 	const result = await apiDelete({
-		endPoint: `user/penelitian/${input.value.id}`,
+		endPoint: `penelitian/proposal/${input.value.id}`,
 		loading: loadingCrud,
 	});
 	if (result) {
-		emit('successDelete');
+		document.getElementById('btn-close-crud').click();
+		emit('successDelete', input.value.id);
 	}
 };
 onMounted(async () => {

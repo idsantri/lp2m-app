@@ -209,8 +209,9 @@ async function confirmUser(val) {
 
 async function loadData() {
 	const data = await apiGet({ endPoint: `users/${params.id}`, loading });
-	user.value = data.user;
-	// console.log(user.value);
+	if (data) {
+		user.value = data.user;
+	}
 }
 
 async function deleteUser() {

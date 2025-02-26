@@ -131,11 +131,11 @@ const menuSetting = [
 ];
 const menuProject = [
 	{
-		to: '/',
+		to: '/penelitian',
 		icon: 'dashboard',
 		label: 'Penelitian',
 		caption: 'Proposal dan Laporan',
-		disable: true,
+		disable: false,
 	},
 	{
 		to: '/',
