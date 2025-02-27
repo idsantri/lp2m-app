@@ -30,7 +30,7 @@
 				<td class="">
 					<span v-if="penelitian.file_proposal">
 						<a :href="penelitian.file_proposal_url">
-							{{ getLastPartOfURL(penelitian.file_proposal) }}
+							{{ penelitian.file_proposal.split('~').pop() }}
 						</a>
 					</span>
 					<span v-else class="text-negative">
@@ -79,7 +79,7 @@
 				<td class="">
 					<span v-if="penelitian.file_laporan">
 						<a :href="penelitian.file_laporan_url">
-							{{ getLastPartOfURL(penelitian.file_laporan) }}
+							{{ penelitian.file_laporan.split('~').pop() }}
 						</a>
 					</span>
 					<span v-else class="text-negative">
@@ -153,10 +153,6 @@ const fileProposal = ref(null);
 const inputLaporan = ref(false);
 const loadingLaporan = ref(false);
 const fileLaporan = ref(null);
-
-function getLastPartOfURL(url) {
-	return url.split('~').pop();
-}
 
 const uploadFile = async (type) => {
 	const file = type === 'proposal' ? fileProposal.value : fileLaporan.value;
