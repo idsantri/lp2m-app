@@ -29,7 +29,7 @@
 				<td class="">File Proposal</td>
 				<td class="">
 					<span v-if="penelitian.file_proposal">
-						<a :href="penelitian.file_proposal">
+						<a :href="penelitian.file_proposal_url">
 							{{ getLastPartOfURL(penelitian.file_proposal) }}
 						</a>
 					</span>
@@ -78,7 +78,7 @@
 				<td class="">File Laporan</td>
 				<td class="">
 					<span v-if="penelitian.file_laporan">
-						<a :href="penelitian.file_laporan">
+						<a :href="penelitian.file_laporan_url">
 							{{ getLastPartOfURL(penelitian.file_laporan) }}
 						</a>
 					</span>
