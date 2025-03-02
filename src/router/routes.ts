@@ -4,6 +4,7 @@ import _info from './_info';
 import _settings from './_settings';
 import _user from './_user';
 import _penelitian from './_penelitian';
+import _penelitian_proposal from './_penelitian_proposal';
 
 const routes: RouteRecordRaw[] = [
 	// layout auth
@@ -28,6 +29,11 @@ const routes: RouteRecordRaw[] = [
 				path: 'penelitian',
 				meta: { title: 'Penelitian' },
 				children: _penelitian,
+			},
+			{
+				path: 'penelitian-proposal',
+				meta: { title: 'Penelitian Proposal' },
+				children: _penelitian_proposal,
 			},
 			{
 				path: 'info',

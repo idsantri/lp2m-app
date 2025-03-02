@@ -3,7 +3,7 @@
 		<q-form @submit.prevent="onSubmit">
 			<FormHeader
 				title="Input Penelitian"
-				:is-new="props.data.id ? true : false"
+				:is-new="data.id ? false : true"
 			/>
 			<q-card-section>
 				<div v-if="loadingCrud">

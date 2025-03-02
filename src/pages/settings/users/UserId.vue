@@ -108,7 +108,6 @@
 									</div>
 									<div class="col-md-6 col-sm-12">
 										<q-toggle
-											disable
 											:model-value="
 												user.confirmed_at ? true : false
 											"

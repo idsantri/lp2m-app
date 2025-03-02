@@ -103,7 +103,13 @@ const submitLogin = async (e) => {
 		auth.setUser(data);
 
 		notifySuccess(responseData.message);
-		router.push('/');
+
+		const { user } = data;
+		if (!user.confirmed_at) {
+			return router.push('/user/profile');
+		}
+
+		return router.push('/');
 	} catch (error) {
 		// console.log('e', error);
 		emit(

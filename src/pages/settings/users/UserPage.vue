@@ -86,6 +86,15 @@ const columns = [
 		sortable: true,
 		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
 	},
+	{
+		name: 'confirmed_at',
+		label: 'Konfirmasi',
+		align: 'left',
+		field: 'confirmed_at',
+		format: (val) => `${val ? 'Ya' : 'Tidak'}`,
+		sortable: true,
+		// sort: (a, b) => parseInt(a, 10) - parseInt(b, 10),
+	},
 ];
 
 async function getUsers() {

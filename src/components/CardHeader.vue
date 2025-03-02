@@ -14,6 +14,7 @@
 				class="q-px-md"
 				outline
 				@click="$router.go(-1)"
+				title="Kembali"
 			/>
 		</div>
 	</q-card-section>

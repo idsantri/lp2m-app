@@ -6,8 +6,7 @@ export default [
 	},
 	{
 		path: ':id',
-		component: () =>
-			import('src/pages/penelitian/by-id/DetailPenelitian.vue'),
+		component: () => import('src/pages/penelitian/DetailPenelitian.vue'),
 		meta: { title: 'Penelitian' },
 	},
 ];

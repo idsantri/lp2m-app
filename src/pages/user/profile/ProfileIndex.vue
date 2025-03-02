@@ -41,17 +41,17 @@
 						/>
 					</div>
 				</div>
-				<!-- <div v-if="!user.confirmed_at">
-						<div class="text-center q-my-lg">
-							<div
-								class="q-pa-md text-negative bg-red-1"
-								style="border-radius: 10px"
-							>
-								<div>Akun Anda belum terkonfirmasi.</div>
-								<div>Silakan hubungi Admin!</div>
-							</div>
+				<div v-if="!user.confirmed_at">
+					<div class="text-center q-my-lg">
+						<div
+							class="q-pa-md text-negative bg-red-1"
+							style="border-radius: 10px"
+						>
+							<div>Akun Anda belum terkonfirmasi.</div>
+							<div>Silakan hubungi Admin!</div>
 						</div>
-					</div> -->
+					</div>
+				</div>
 				<q-list bordered separator class="q-mt-sm">
 					<q-item class="q-pa-sm">
 						<q-item-section>
