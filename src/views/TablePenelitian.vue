@@ -7,6 +7,7 @@
 		:loading="loading"
 		@row-click="(evt, row, index) => $router.push(`/penelitian/${row.id}`)"
 		:filter="filter"
+		:rows-per-page-options="[10, 25, 50, 75, 100, 0]"
 	>
 		<template v-slot:top-right>
 			<q-input

@@ -13,19 +13,18 @@
 		</q-tabs>
 		<q-tab-panels v-model="tab" class="">
 			<q-tab-panel name="proposal" class="q-pa-sm">
-				<TabProposal />
+				<TemplateReview variant="proposal" />
 			</q-tab-panel>
 
 			<q-tab-panel name="laporan" class="q-pa-sm">
-				<TabLaporan />
+				<TemplateReview variant="laporan" />
 			</q-tab-panel>
 		</q-tab-panels>
 	</q-card>
 </template>
 <script setup>
 import { ref } from 'vue';
-import TabProposal from './TabProposal.vue';
-import TabLaporan from './TabLaporan.vue';
 const tab = ref('proposal');
+import TemplateReview from './TemplateReview.vue';
 </script>
 <style lang="scss" scoped></style>

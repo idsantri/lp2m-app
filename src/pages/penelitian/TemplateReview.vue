@@ -1,6 +1,8 @@
 <template>
 	<div class="bg-brown-11 q-pa-sm flex items-center justify-between">
-		<div class="text-subtitle1 q-ml-sm">Riwayat Proposal</div>
+		<div class="text-subtitle1 q-ml-sm">
+			Riwayat {{ variant?.toUpperCase() }}
+		</div>
 		<q-btn
 			no-caps
 			label="Upload File"
@@ -22,14 +24,14 @@
 		<InputFile
 			v-if="showUpload"
 			class="q-mt-sm"
-			label="Pilih file proposal"
+			:label="'Pilih file ' + variant"
 			hint="Hanya menerima file pdf"
 			v-model="fileUpload"
 			@on-Upload="uploadFile"
 			:loading="loadingUpload"
 		/>
-		<q-list bordered v-if="proposal?.length > 0" separator>
-			<q-item v-for="(item, index) in proposal" :key="index" separator>
+		<q-list bordered v-if="review?.length > 0" separator>
+			<q-item v-for="(item, index) in review" :key="index" separator>
 				<q-item-section avatar>
 					<q-btn
 						icon="delete"
@@ -64,7 +66,7 @@
 						no-caps=""
 						outline
 						glossy
-						:to="`/penelitian-proposal/${item.id}`"
+						:to="`/penelitian-review/${item.id}`"
 					/>
 				</q-item-section>
 			</q-item>
@@ -86,7 +88,14 @@ import { formatDate } from 'src/utils/format-date';
 import apiPost from 'src/api/api-post';
 import apiDelete from 'src/api/api-delete';
 
-const proposal = ref([]);
+const props = defineProps({
+	variant: {
+		type: String,
+		required: true,
+	},
+});
+
+const review = ref([]);
 const { params } = useRoute();
 const loading = ref(false);
 const loadingUpload = ref(false);
@@ -95,12 +104,12 @@ const fileUpload = ref(null);
 
 const loadData = async () => {
 	const data = await apiGet({
-		endPoint: 'penelitian-proposal',
-		params: { penelitian_id: params.id },
+		endPoint: 'penelitian-review',
+		params: { penelitian_id: params.id, type: props.variant },
 		loading,
 	});
 	if (data) {
-		proposal.value = data.proposal;
+		review.value = data.review;
 	}
 };
 onMounted(async () => {
@@ -110,7 +119,7 @@ onMounted(async () => {
 const uploadFile = async () => {
 	const file = fileUpload.value;
 	if (!file) {
-		notifyError('Pilih file!');
+		notifyError('Pilih file ' + props.variant + ' terlebih dahulu!');
 		return;
 	}
 
@@ -118,14 +127,14 @@ const uploadFile = async () => {
 	formData.append('file', file);
 
 	const response = await apiPost({
-		endPoint: 'penelitian-proposal/upload',
+		endPoint: 'penelitian-review/upload',
 		data: formData,
 		loading: loadingUpload,
 		config: {
 			headers: {
 				'Content-Type': 'multipart/form-data',
 			},
-			params: { penelitian_id: params.id },
+			params: { penelitian_id: params.id, type: props.variant },
 		},
 	});
 
@@ -137,7 +146,7 @@ const uploadFile = async () => {
 };
 const onDelete = async ({ id }) => {
 	const response = await apiDelete({
-		endPoint: `penelitian-proposal/${id}`,
+		endPoint: `penelitian-review/${id}`,
 		loading: loading,
 		message: '<span style="color: red">Hapus file ini?</span>',
 	});

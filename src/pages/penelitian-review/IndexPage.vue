@@ -1,7 +1,7 @@
 <template>
 	<q-card>
 		<CardHeader>
-			Data Proposal
+			Review Penelitian
 			<template v-slot:action>
 				<q-btn
 					no-caps
@@ -32,6 +32,12 @@
 						<a :href="proposal?.file_url">
 							{{ proposal?.file?.split('~').pop() }}
 						</a>
+					</div>
+				</div>
+				<div>
+					<div class="text-caption text-italic">Tipe</div>
+					<div>
+						{{ proposal?.type?.toUpperCase() }}
 					</div>
 				</div>
 				<div>
@@ -103,12 +109,12 @@ const inputReview = ref(false);
 const input = ref({});
 async function loadData() {
 	const data = await apiGet({
-		endPoint: `penelitian-proposal/${params.id}`,
+		endPoint: `penelitian-review/${params.id}`,
 		loading,
 	});
 	// console.log('🚀 ~ loadData ~ data:', data);
 	if (data) {
-		proposal.value = data.proposal;
+		proposal.value = data.review;
 		penelitian.value = data.penelitian;
 	}
 }
@@ -124,7 +130,7 @@ const onSubmit = async () => {
 		review: input.value.review,
 	};
 	const response = await apiUpdate({
-		endPoint: `penelitian-proposal/${params.id}`,
+		endPoint: `penelitian-review/${params.id}`,
 		data,
 		loading,
 	});

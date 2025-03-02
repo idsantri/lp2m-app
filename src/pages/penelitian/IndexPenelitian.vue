@@ -1,12 +1,17 @@
 <template lang="">
-	<TablePenelitian :penelitian="penelitian" :loading="loading" />
-
-	<!-- {{ penelitian }} -->
+	<q-card class="" style="">
+		<CardHeader>
+			<span class="text-weight-light"> Data Penelitian </span>
+			<span class="text-subtitle1">(All)</span>
+		</CardHeader>
+		<TablePenelitian :penelitian="penelitian" :loading="loading" />
+	</q-card>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
 import apiGet from 'src/api/api-get';
 import TablePenelitian from 'src/views/TablePenelitian.vue';
+import CardHeader from 'src/components/CardHeader.vue';
 
 const loading = ref(false);
 const penelitian = ref([]);
