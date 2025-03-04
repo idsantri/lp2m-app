@@ -28,6 +28,6 @@
 <script setup>
 import { ref } from 'vue';
 const tab = ref('proposal');
-import TemplateReview from './TemplateReview.vue';
+import TemplateReview from 'src/views/TemplateReview.vue';
 </script>
 <style lang="scss" scoped></style>

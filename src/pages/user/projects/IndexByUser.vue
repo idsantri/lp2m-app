@@ -1,7 +1,9 @@
 <template lang="">
 	<q-card class="" style="">
 		<CardHeader>
-			<span class="text-weight-light"> Data Penelitian </span>
+			<span class="text-weight-light">
+				Data Penelitian dan Pengabdian
+			</span>
 			<span class="text-subtitle1">
 				{{ user.full_name }}
 			</span>
@@ -17,12 +19,12 @@
 				/>
 			</template>
 		</CardHeader>
-		<TablePenelitian :penelitian="penelitian" :loading="loading" />
+		<TableProjects :data="projects" :loading="loading" />
 	</q-card>
 	<q-dialog v-model="crud">
-		<CrudPenelitian
+		<CrudProject
 			:data="{}"
-			@success-submit="(r) => $router.push(`/penelitian/${r.id}`)"
+			@success-submit="(r) => $router.push(`/projects/${r.id}`)"
 			@success-delete="null"
 		/>
 	</q-dialog>
@@ -31,12 +33,12 @@
 import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import CardHeader from 'src/components/CardHeader.vue';
-import CrudPenelitian from 'src/views/CrudProject.vue';
-import TablePenelitian from 'src/views/TableProjects.vue';
+import CrudProject from 'src/views/CrudProject.vue';
+import TableProjects from 'src/views/TableProjects.vue';
 import authStore from 'src/stores/auth-store';
 
 const loading = ref(false);
-const penelitian = ref([]);
+const projects = ref([]);
 const crud = ref(false);
 const { getUser: user } = authStore();
 
@@ -46,9 +48,9 @@ async function loadData() {
 		loading,
 	});
 	if (data) {
-		penelitian.value = data.projects;
+		projects.value = data.projects;
 	}
-	// console.log(data.penelitian);
+	// console.log(data.projects);
 }
 
 onMounted(async () => {

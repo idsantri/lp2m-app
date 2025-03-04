@@ -21,7 +21,7 @@
 						dense
 						class="q-px-sm"
 						outline
-						@click="crudPenelitian = true"
+						@click="crud = true"
 					/>
 				</div>
 			</div>
@@ -37,54 +37,49 @@
 					<tr>
 						<td class="label">Tanggal Buat</td>
 						<td class="">
-							{{
-								formatDate(
-									penelitian.created_at,
-									'dd MMMM yyyy',
-								)
-							}}
+							{{ formatDate(project.created_at, 'dd MMMM yyyy') }}
 						</td>
 					</tr>
 					<tr>
 						<td class="label">Peneliti</td>
 						<td class="">
 							<RouterLink
-								:to="`/settings/users/${penelitian.user_id}`"
+								:to="`/settings/users/${project.user_id}`"
 							>
-								{{ penelitian.user_name }}
+								{{ project.user_name }}
 							</RouterLink>
 						</td>
 					</tr>
 					<tr>
 						<td class="label">Jenis Proyek</td>
 						<td class="text-weight-medium">
-							{{ penelitian?.jenis?.toUpperCase() }}
+							{{ project?.jenis?.toUpperCase() }}
 						</td>
 					</tr>
 					<tr>
 						<td class="label">Judul</td>
 						<td class="text-weight-medium">
-							{{ penelitian.judul }}
+							{{ project.judul }}
 						</td>
 					</tr>
 					<tr>
 						<td class="label">Deskripsi</td>
-						<td class="">{{ penelitian.deskripsi }}</td>
+						<td class="">{{ project.deskripsi }}</td>
 					</tr>
 					<tr>
 						<td class="label">Anggota</td>
-						<td class="">{{ penelitian.anggota }}</td>
+						<td class="">{{ project.anggota }}</td>
 					</tr>
 				</tbody>
 			</q-markup-table>
 		</q-card-section>
 	</q-card>
 
-	<q-dialog v-model="crudPenelitian">
-		<CrudPenelitian
-			:data="penelitian"
-			@success-submit="(r) => (penelitian = r)"
-			@success-delete="$router.push('/user/penelitian')"
+	<q-dialog v-model="crud">
+		<CrudProject
+			:data="project"
+			@success-submit="(r) => (project = r)"
+			@success-delete="$router.push('/user/projects')"
 		/>
 	</q-dialog>
 	<!-- {{ projectStatus }} -->
@@ -93,15 +88,15 @@
 import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import CrudPenelitian from 'src/views/CrudProject.vue';
+import CrudProject from 'src/views/CrudProject.vue';
 import { formatDate } from 'src/utils/format-date';
 
 const { params } = useRoute();
 const loading = ref(false);
-const penelitian = ref({});
+const project = ref({});
 const projectStatus = ref({});
 
-const crudPenelitian = ref(false);
+const crud = ref(false);
 
 async function loadData() {
 	const data = await apiGet({
@@ -110,7 +105,7 @@ async function loadData() {
 	});
 	if (data) {
 		// console.log('🚀 ~ loadData ~ data:', data);
-		penelitian.value = data.project;
+		project.value = data.project;
 		projectStatus.value = data.project_status;
 	}
 }

@@ -102,7 +102,7 @@ async function onSubmit() {
 }
 const handleDelete = async () => {
 	const result = await apiDelete({
-		endPoint: `penelitian/${input.value.id}`,
+		endPoint: `projects/${input.value.id}`,
 		loading: loadingCrud,
 	});
 	if (result) {

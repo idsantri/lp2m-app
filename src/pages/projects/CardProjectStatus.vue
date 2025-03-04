@@ -21,7 +21,7 @@
 						dense
 						class="q-px-sm"
 						outline
-						@click="crudPenelitianSetup = true"
+						@click="crud = true"
 					/>
 				</div>
 			</div>
@@ -37,6 +37,17 @@
 					<tr>
 						<td class="label">Periode</td>
 						<td class="">{{ projectStatus?.periode }}</td>
+					</tr>
+					<tr>
+						<td class="label">Reviewer</td>
+						<td class="">
+							<RouterLink
+								v-if="projectStatus?.reviewer_user_id"
+								:to="`/settings/users/${projectStatus.reviewer_user_id}`"
+							>
+								{{ projectStatus.reviewer_user_name }}
+							</RouterLink>
+						</td>
 					</tr>
 					<tr>
 						<td class="label">Status Proposal</td>
@@ -62,23 +73,12 @@
 							{{ projectStatus?.laporan_keterangan }}
 						</td>
 					</tr>
-					<tr>
-						<td class="label">Reviewer</td>
-						<td class="">
-							<RouterLink
-								v-if="projectStatus?.reviewer_user_id"
-								:to="`/settings/users/${projectStatus.reviewer_user_id}`"
-							>
-								{{ projectStatus.reviewer_user_name }}
-							</RouterLink>
-						</td>
-					</tr>
 				</tbody>
 			</q-markup-table>
 		</q-card-section>
 	</q-card>
 
-	<q-dialog v-model="crudPenelitianSetup">
+	<q-dialog v-model="crud">
 		<CrudProjectStatus
 			:data="projectStatus"
 			:project-id="params.id"
@@ -98,7 +98,7 @@ const { params } = useRoute();
 const loading = ref(false);
 const projectStatus = ref({});
 
-const crudPenelitianSetup = ref(false);
+const crud = ref(false);
 
 async function loadData() {
 	const data = await apiGet({

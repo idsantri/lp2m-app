@@ -24,20 +24,20 @@
 			<q-card-section class="q-pa-sm">
 				<div class="wrap" style="display: flex; gap: 20px 10px">
 					<ContentLabel label="Judul">
-						{{ penelitian?.judul }}
+						{{ project?.judul }}
 					</ContentLabel>
 					<ContentLabel label="File">
-						<a :href="proposal?.file_url">
-							{{ proposal?.file?.split('~').pop() }}
+						<a :href="review?.file_url">
+							{{ review?.file?.split('~').pop() }}
 						</a>
 					</ContentLabel>
 					<ContentLabel label="Tipe">
-						{{ proposal?.type?.toUpperCase() }}
+						{{ review?.type?.toUpperCase() }}
 					</ContentLabel>
 					<ContentLabel label="Reviewer">
 						<RouterLink
-							:to="`/settings/users/${penelitian?.reviewer_user_id}`"
-							>{{ penelitian?.reviewer_user_name }}</RouterLink
+							:to="`/settings/users/${project?.reviewer_user_id}`"
+							>{{ project?.reviewer_user_name }}</RouterLink
 						>
 					</ContentLabel>
 				</div>
@@ -55,11 +55,11 @@
 			<q-card-section v-if="!inputReview" class="q-pa-sm">
 				<div>
 					<div class="text-caption text-italic">Kesimpulan</div>
-					<div class="text-subtitle1">{{ proposal?.kesimpulan }}</div>
+					<div class="text-subtitle1">{{ review?.kesimpulan }}</div>
 				</div>
 				<div class="q-mt-sm">
 					<div class="text-caption text-italic">Review</div>
-					<div v-html="proposal?.review"></div>
+					<div v-html="review?.review"></div>
 				</div>
 			</q-card-section>
 			<q-card-section v-else class="q-pa-sm">
@@ -83,8 +83,8 @@
 			</q-card-section>
 		</div>
 	</q-card>
-	<!-- <pre>{{ proposal }}</pre>
-	<pre>{{ penelitian }}</pre> -->
+	<!-- <pre>{{ review }}</pre>
+	<pre>{{ project }}</pre> -->
 </template>
 <script setup>
 import apiGet from 'src/api/api-get';
@@ -96,10 +96,11 @@ import ContentLabel from 'src/components/ContentLabel.vue';
 
 const { params } = useRoute();
 const loading = ref(false);
-const proposal = ref({});
-const penelitian = ref({});
+const review = ref({});
+const project = ref({});
 const inputReview = ref(false);
 const input = ref({});
+
 async function loadData() {
 	const data = await apiGet({
 		endPoint: `reviews/${params.id}`,
@@ -107,14 +108,14 @@ async function loadData() {
 	});
 	// console.log('🚀 ~ loadData ~ data:', data);
 	if (data) {
-		proposal.value = data.review;
-		penelitian.value = data.project;
+		review.value = data.review;
+		project.value = data.project;
 	}
 }
 
 onMounted(async () => {
 	await loadData();
-	Object.assign(input.value, proposal.value);
+	Object.assign(input.value, review.value);
 });
 
 const onSubmit = async () => {
@@ -127,6 +128,8 @@ const onSubmit = async () => {
 		data,
 		loading,
 	});
+	console.log('🚀 ~ loadData ~ data:', data);
+	console.log('🚀 ~ loadData ~ data:', data);
 	if (response) {
 		inputReview.value = false;
 		await loadData();

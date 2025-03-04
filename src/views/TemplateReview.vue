@@ -72,7 +72,7 @@
 						no-caps=""
 						outline
 						glossy
-						:to="`/penelitian-review/${item.id}`"
+						:to="`/reviews/${item.id}`"
 					/>
 				</q-item-section>
 			</q-item>

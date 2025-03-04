@@ -1,13 +1,11 @@
 <template>
-	<q-card>
-		<q-card-section>
+	<q-card class="" style="">
+		<CardHeader>
 			<div class="text-subtitle2 text-weight-bold">ID Santri</div>
-			<div class="text-subtitle1">{{ config.INS_SHORT }}</div>
-			<div class="text-caption">
-				{{ config.INS_DESC }} {{ config.INS_NAME }}
-			</div>
-		</q-card-section>
-		<q-card-section class="q-pt-none">
+			<div class="text-subtitle1">{{ config.PWA_NAME }}</div>
+		</CardHeader>
+
+		<q-card-section class="q-pa-sm">
 			<div v-for="(item, index) in releases" :key="index" class="q-mb-sm">
 				<q-list bordered separator>
 					<q-item-label header class="bg-brown-1 q-pa-sm text-italic">
@@ -39,6 +37,7 @@
 	</q-card>
 </template>
 <script setup>
+import CardHeader from 'src/components/CardHeader.vue';
 import config from 'src/config';
 
 const releases = [
@@ -49,9 +48,7 @@ const releases = [
 			'New Release': [
 				'Autentikasi',
 				'User Management',
-				'Penelitian',
-				'Pengabdian',
-				'Info Luring',
+				'Proyek Penelitian dan Pengabdian',
 			],
 		},
 	},

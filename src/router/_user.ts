@@ -9,11 +9,7 @@ export default [
 		meta: { title: 'User Profile' },
 	},
 	{
-		path: 'penelitian',
-		component: () => import('src/pages/user/penelitian/IndexByUser.vue'),
-	},
-	{
-		path: 'extend',
-		component: () => import('src/pages/user/extend/IndexPage.vue'),
+		path: 'projects',
+		component: () => import('src/pages/user/projects/IndexByUser.vue'),
 	},
 ];

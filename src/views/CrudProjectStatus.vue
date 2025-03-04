@@ -1,7 +1,7 @@
 <template lang="">
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<FormHeader title="Setup Penelitian" :is-new="false" />
+			<FormHeader title="Setup Proyek" :is-new="false" />
 			<q-card-section>
 				<div v-if="loadingCrud">
 					<q-dialog v-model="loadingCrud" persistent="">
@@ -17,6 +17,22 @@
 					url="periode"
 					label="Periode"
 					class="q-mt-sm"
+				/>
+				<q-select
+					dense
+					outlined
+					emit-value
+					map-options
+					option-value="id"
+					option-label="name"
+					:options="users"
+					:loading="loading"
+					behavior="menu"
+					clearable
+					v-model="input.reviewer_user_id"
+					label="Reviewer"
+					class="q-mt-sm"
+					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
 				<InputSelectArray
 					v-model="input.proposal_status"
@@ -49,22 +65,6 @@
 					v-model="input.laporan_keterangan"
 					autogrow
 					hint="Keterangan tambahan untuk laporan"
-				/>
-				<q-select
-					dense
-					outlined
-					emit-value
-					map-options
-					option-value="id"
-					option-label="name"
-					:options="users"
-					:loading="loading"
-					behavior="menu"
-					clearable
-					v-model="input.reviewer_user_id"
-					label="Reviewer"
-					class="q-mt-sm"
-					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
 			</q-card-section>
 

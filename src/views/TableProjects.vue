@@ -1,11 +1,11 @@
 <template lang="">
 	<q-table
 		class="q-px-sm"
-		:rows="penelitian"
+		:rows="data"
 		:columns="columns"
 		row-key="id"
 		:loading="loading"
-		@row-click="(evt, row, index) => $router.push(`/penelitian/${row.id}`)"
+		@row-click="(evt, row, index) => $router.push(`/projects/${row.id}`)"
 		:filter="filter"
 		:rows-per-page-options="[10, 25, 50, 75, 100, 0]"
 	>
@@ -23,14 +23,13 @@
 			</q-input>
 		</template>
 	</q-table>
-	<!-- <pre>{{ penelitian }}</pre> -->
 </template>
 <script setup>
 import { format } from 'date-fns';
 import { ref } from 'vue';
 
 defineProps({
-	penelitian: { type: Array, required: true },
+	data: { type: Array, required: true },
 	loading: { type: Boolean, required: true, default: false },
 });
 

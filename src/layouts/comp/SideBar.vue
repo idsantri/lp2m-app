@@ -29,19 +29,30 @@
 		<!-- HOME -->
 		<q-item class="" to="/home">
 			<q-item-section>
-				<q-item-label class="text-brown-11">HOME</q-item-label>
+				<q-item-label class="text-brown-11 text-subtitle1">
+					Home
+				</q-item-label>
 			</q-item-section>
 		</q-item>
 
-		<!-- USER -->
+		<!-- DASHBOARD -->
 		<ExpansionItem label="Dashboard" :separator="true">
 			<MenuItem v-for="item in menuUser" :key="item.to" :item="item" />
 		</ExpansionItem>
 
 		<!-- PROJECT -->
-		<ExpansionItem label="Proyek" :separator="true">
-			<MenuItem v-for="item in menuProject" :key="item.to" :item="item" />
-		</ExpansionItem>
+
+		<q-separator dark />
+		<q-item class="" to="/projects">
+			<q-item-section>
+				<q-item-label class="text-brown-11 text-subtitle1">
+					Proyek
+				</q-item-label>
+				<q-item-label caption class="text-brown-12">
+					Penelitian dan Pengabdian
+				</q-item-label>
+			</q-item-section>
+		</q-item>
 
 		<!-- SETTING -->
 		<ExpansionItem label="Pengaturan">
@@ -67,25 +78,11 @@ const { getIsLogin, getUser } = storeToRefs(authStore());
 
 const menuUser = [
 	{
-		to: '/user/penelitian',
+		to: '/user/projects',
 		icon: 'dashboard',
-		label: 'Penelitian',
-		caption: 'Proposal dan Laporan Penelitian',
+		label: 'Proyek',
+		caption: 'Penelitian dan Pengabdian',
 		disable: false,
-	},
-	{
-		to: '/user/pengabdian',
-		icon: 'dashboard',
-		label: 'Pengabdian',
-		caption: 'Proposal dan Laporan Pengabdian',
-		disable: true,
-	},
-	{
-		to: '/user/extend',
-		icon: 'dashboard',
-		label: 'Ekstensi',
-		caption: 'Pranala Luar',
-		disable: true,
 	},
 	{
 		to: '/user/profile',
@@ -127,29 +124,6 @@ const menuSetting = [
 		label: 'List',
 		caption: 'Auto Complete (Form Isian)',
 		disable: false,
-	},
-];
-const menuProject = [
-	{
-		to: '/penelitian',
-		icon: 'dashboard',
-		label: 'Penelitian',
-		caption: 'Proposal dan Laporan',
-		disable: false,
-	},
-	{
-		to: '/',
-		icon: 'dashboard',
-		label: 'Pengabdian',
-		caption: 'Proposal dan Laporan',
-		disable: true,
-	},
-	{
-		to: '/',
-		icon: 'dashboard',
-		label: 'Ekstensi',
-		caption: 'Data Pranala Luar',
-		disable: true,
 	},
 ];
 </script>

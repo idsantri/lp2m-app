@@ -11,6 +11,6 @@ export default [
 	{
 		path: 'about',
 		component: () => import('src/pages/info/about/AboutPage.vue'),
-		meta: { title: 'Info: Release' },
+		meta: { title: 'Info: About' },
 	},
 ];

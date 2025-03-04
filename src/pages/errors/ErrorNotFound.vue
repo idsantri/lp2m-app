@@ -14,8 +14,8 @@
 				color="brown-1"
 				text-color="brown-6"
 				unelevated
-				to="/"
-				label="Go Home"
+				@click="$router.go(-1)"
+				label="Kembali"
 				no-caps
 			/>
 		</div>

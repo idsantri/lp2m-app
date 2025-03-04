@@ -27,12 +27,12 @@ const routes: RouteRecordRaw[] = [
 				meta: { title: 'Home' },
 			},
 			{
-				path: 'penelitian',
-				meta: { title: 'Penelitian' },
+				path: 'projects',
+				meta: { title: 'Proyek' },
 				children: _projects,
 			},
 			{
-				path: 'penelitian-review',
+				path: 'reviews',
 				meta: { title: 'Review' },
 				children: _reviews,
 			},
