@@ -10,7 +10,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import apiGet from 'src/api/api-get';
-import TablePenelitian from 'src/views/TablePenelitian.vue';
+import TablePenelitian from 'src/views/TableProjects.vue';
 import CardHeader from 'src/components/CardHeader.vue';
 
 const loading = ref(false);
@@ -18,11 +18,11 @@ const penelitian = ref([]);
 
 async function loadData() {
 	const data = await apiGet({
-		endPoint: 'penelitian',
+		endPoint: 'projects',
 		loading,
 	});
 	if (data) {
-		penelitian.value = data.penelitian;
+		penelitian.value = data.projects;
 	}
 }
 

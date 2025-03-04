@@ -1,7 +1,7 @@
 <template>
 	<q-card>
 		<CardHeader>
-			Review Penelitian
+			Review Proyek
 			<template v-slot:action>
 				<q-btn
 					no-caps
@@ -21,33 +21,25 @@
 			/>
 		</div>
 		<div v-else>
-			<q-card-section class="q-pa-sm flex justify-start q-gutter-md">
-				<div>
-					<div class="text-caption text-italic">Judul</div>
-					<div>{{ penelitian?.judul }}</div>
-				</div>
-				<div>
-					<div class="text-caption text-italic">File</div>
-					<div>
+			<q-card-section class="q-pa-sm">
+				<div class="wrap" style="display: flex; gap: 20px 10px">
+					<ContentLabel label="Judul">
+						{{ penelitian?.judul }}
+					</ContentLabel>
+					<ContentLabel label="File">
 						<a :href="proposal?.file_url">
 							{{ proposal?.file?.split('~').pop() }}
 						</a>
-					</div>
-				</div>
-				<div>
-					<div class="text-caption text-italic">Tipe</div>
-					<div>
+					</ContentLabel>
+					<ContentLabel label="Tipe">
 						{{ proposal?.type?.toUpperCase() }}
-					</div>
-				</div>
-				<div>
-					<div class="text-caption text-italic">Reviewer</div>
-					<div>
+					</ContentLabel>
+					<ContentLabel label="Reviewer">
 						<RouterLink
 							:to="`/settings/users/${penelitian?.reviewer_user_id}`"
 							>{{ penelitian?.reviewer_user_name }}</RouterLink
 						>
-					</div>
+					</ContentLabel>
 				</div>
 			</q-card-section>
 			<q-separator />
@@ -100,6 +92,7 @@ import apiUpdate from 'src/api/api-update';
 import CardHeader from 'src/components/CardHeader.vue';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import ContentLabel from 'src/components/ContentLabel.vue';
 
 const { params } = useRoute();
 const loading = ref(false);
@@ -109,13 +102,13 @@ const inputReview = ref(false);
 const input = ref({});
 async function loadData() {
 	const data = await apiGet({
-		endPoint: `penelitian-review/${params.id}`,
+		endPoint: `reviews/${params.id}`,
 		loading,
 	});
 	// console.log('🚀 ~ loadData ~ data:', data);
 	if (data) {
 		proposal.value = data.review;
-		penelitian.value = data.penelitian;
+		penelitian.value = data.project;
 	}
 }
 
@@ -130,7 +123,7 @@ const onSubmit = async () => {
 		review: input.value.review,
 	};
 	const response = await apiUpdate({
-		endPoint: `penelitian-review/${params.id}`,
+		endPoint: `reviews/${params.id}`,
 		data,
 		loading,
 	});

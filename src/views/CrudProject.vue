@@ -1,10 +1,7 @@
 <template lang="">
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<FormHeader
-				title="Input Penelitian"
-				:is-new="data.id ? false : true"
-			/>
+			<FormHeader title="Input Proyek" :is-new="data.id ? false : true" />
 			<q-card-section>
 				<div v-if="loadingCrud">
 					<q-dialog v-model="loadingCrud" persistent="">
@@ -15,6 +12,15 @@
 						/>
 					</q-dialog>
 				</div>
+				<q-select
+					class="q-mt-sm"
+					dense
+					outlined
+					label="Jenis Proyek"
+					v-model="input.jenis"
+					:options="['Penelitian', 'Pengabdian']"
+					:rules="[(val) => !!val || 'Harus diisi!']"
+				/>
 				<q-input
 					class="q-mt-sm"
 					dense
@@ -22,6 +28,7 @@
 					label="Judul"
 					v-model="input.judul"
 					hint="Tidak boleh sama dengan judul yang sudah ada"
+					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
 				<q-input
 					class="q-mt-sm"
@@ -64,6 +71,7 @@ const input = ref({});
 const loadingCrud = ref(false);
 async function onSubmit() {
 	const data = {
+		jenis: input.value.jenis,
 		judul: input.value.judul,
 		deskripsi: input.value.deskripsi,
 		anggota: input.value.anggota,
@@ -72,7 +80,7 @@ async function onSubmit() {
 	let response = null;
 	if (input.value.id) {
 		response = await apiUpdate({
-			endPoint: `penelitian/${input.value.id}`,
+			endPoint: `projects/${input.value.id}`,
 			data,
 			confirm: true,
 			notify: true,
@@ -80,7 +88,7 @@ async function onSubmit() {
 		});
 	} else {
 		response = await apiPost({
-			endPoint: 'penelitian',
+			endPoint: 'projects',
 			data,
 			notify: true,
 			loading: loadingCrud,
@@ -89,7 +97,7 @@ async function onSubmit() {
 
 	if (response) {
 		document.getElementById('btn-close-crud').click();
-		emit('successSubmit', response.penelitian);
+		emit('successSubmit', response.project);
 	}
 }
 const handleDelete = async () => {

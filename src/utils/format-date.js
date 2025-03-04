@@ -1,14 +1,24 @@
-import { format } from 'date-fns';
+import { format, isValid } from 'date-fns';
 import { id } from 'date-fns/locale';
 
 function formatDate(date, formatString) {
 	try {
-		return format(new Date(date), formatString, {
+		const parsedDate = new Date(date);
+
+		// Check if the date is valid
+		if (!isValid(parsedDate)) {
+			return 'Invalid Date';
+		}
+
+		// Check if the format string is valid by attempting to format the date
+		const formattedDate = format(parsedDate, formatString, {
 			locale: id,
-		}); // Format tanggal
+		});
+
+		return formattedDate;
 	} catch (error) {
-		// console.error('Error formatting date:', error);
-		return 'Invalid Date'; // Handle error
+		return 'Invalid Format'; // Handle invalid format error
 	}
 }
+
 export { formatDate };

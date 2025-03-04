@@ -19,18 +19,36 @@
 					class="q-mt-sm"
 				/>
 				<InputSelectArray
-					v-model="input.status_proposal"
+					v-model="input.proposal_status"
 					url="status-proposal"
 					label="Status Proposal"
 					class="q-mt-sm"
 					clearable
 				/>
+				<q-input
+					class="q-mt-sm"
+					dense
+					outlined
+					label="Keterangan Proposal"
+					v-model="input.proposal_keterangan"
+					autogrow
+					hint="Keterangan tambahan untuk proposal"
+				/>
 				<InputSelectArray
-					v-model="input.status_laporan"
+					v-model="input.laporan_status"
 					url="status-laporan"
 					label="Status Laporan"
 					class="q-mt-sm"
 					clearable
+				/>
+				<q-input
+					class="q-mt-sm"
+					dense
+					outlined
+					label="Keterangan Laporan"
+					v-model="input.laporan_keterangan"
+					autogrow
+					hint="Keterangan tambahan untuk laporan"
 				/>
 				<q-select
 					dense
@@ -47,7 +65,7 @@
 					label="Reviewer"
 					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
-				></q-select>
+				/>
 			</q-card-section>
 
 			<FormActions :btn-delete="false" @onDelete="null" />
@@ -56,14 +74,15 @@
 </template>
 <script setup>
 import { onMounted, ref } from 'vue';
-import apiUpdate from 'src/api/api-update';
 import FormHeader from 'src/components/FormHeader.vue';
 import FormActions from 'src/components/FormActions.vue';
 import apiGet from 'src/api/api-get';
 import InputSelectArray from 'src/components/InputSelectArray.vue';
+import apiPost from 'src/api/api-post';
 
 const props = defineProps({
 	data: Object,
+	projectId: { type: Number, required: true },
 });
 const emit = defineEmits(['successSubmit', 'successDelete']);
 const input = ref({});
@@ -84,14 +103,17 @@ onMounted(async () => {
 
 async function onSubmit() {
 	const data = {
-		status_proposal: input.value.status_proposal,
-		status_laporan: input.value.status_laporan,
+		project_id: props.projectId,
+		proposal_status: input.value.proposal_status,
+		proposal_keterangan: input.value.proposal_keterangan,
+		laporan_status: input.value.laporan_status,
+		laporan_keterangan: input.value.laporan_keterangan,
 		periode: input.value.periode,
 		reviewer_user_id: input.value.reviewer_user_id,
 	};
 
-	const response = await apiUpdate({
-		endPoint: `penelitian/${input.value.id}/setup`,
+	const response = await apiPost({
+		endPoint: 'projects-status',
 		data,
 		confirm: true,
 		notify: true,
@@ -100,7 +122,7 @@ async function onSubmit() {
 
 	if (response) {
 		document.getElementById('btn-close-crud').click();
-		emit('successSubmit', response.penelitian);
+		emit('successSubmit', response.project_status);
 	}
 }
 </script>

@@ -45,6 +45,13 @@ const columns = [
 		format: (value) => format(new Date(value), 'yyyy-MM-dd'),
 	},
 	{
+		name: 'jenis',
+		label: 'Jenis Proyek',
+		align: 'left',
+		field: 'jenis',
+		sortable: true,
+	},
+	{
 		name: 'judul',
 		label: 'Judul',
 		align: 'left',
@@ -66,10 +73,17 @@ const columns = [
 		sortable: true,
 	},
 	{
-		name: 'status_proposal',
+		name: 'proposal_status',
 		label: 'Status Proposal',
 		align: 'left',
-		field: 'status_proposal',
+		field: 'proposal_status',
+		sortable: true,
+	},
+	{
+		name: 'laporan_status',
+		label: 'Status Laporan',
+		align: 'left',
+		field: 'laporan_status',
 		sortable: true,
 	},
 ];

@@ -1,14 +1,14 @@
 <template>
-	<div class="bg-brown-11 q-pa-sm flex items-center justify-between">
-		<div class="text-subtitle1 q-ml-sm">
-			Riwayat {{ variant?.toUpperCase() }}
-		</div>
+	<div
+		class="q-pa-sm flex items-center justify-between q-card--bordered q-mb-sm"
+	>
+		<div class="text-subtitle1">Riwayat {{ variant?.toUpperCase() }}</div>
 		<q-btn
 			no-caps
 			label="Upload File"
-			icon="add"
+			icon="upload"
 			dense
-			class="q-px-md q-mr-sm"
+			class="q-px-md"
 			outline
 			@click="showUpload = !showUpload"
 		/>
@@ -31,13 +31,19 @@
 			:loading="loadingUpload"
 		/>
 		<q-list bordered v-if="review?.length > 0" separator>
-			<q-item v-for="(item, index) in review" :key="index" separator>
+			<q-item
+				v-for="(item, index) in review"
+				:key="index"
+				separator
+				class="q-pa-sm"
+			>
 				<q-item-section avatar>
 					<q-btn
 						icon="delete"
 						outline=""
 						color="negative"
 						glossy
+						round=""
 						@click="onDelete(item)"
 					/>
 				</q-item-section>
@@ -104,14 +110,15 @@ const fileUpload = ref(null);
 
 const loadData = async () => {
 	const data = await apiGet({
-		endPoint: 'penelitian-review',
-		params: { penelitian_id: params.id, type: props.variant },
+		endPoint: 'reviews',
+		params: { project_id: params.id, type: props.variant },
 		loading,
 	});
 	if (data) {
-		review.value = data.review;
+		review.value = data.reviews;
 	}
 };
+
 onMounted(async () => {
 	await loadData();
 });
@@ -127,14 +134,14 @@ const uploadFile = async () => {
 	formData.append('file', file);
 
 	const response = await apiPost({
-		endPoint: 'penelitian-review/upload',
+		endPoint: 'reviews/upload',
 		data: formData,
 		loading: loadingUpload,
 		config: {
 			headers: {
 				'Content-Type': 'multipart/form-data',
 			},
-			params: { penelitian_id: params.id, type: props.variant },
+			params: { project_id: params.id, type: props.variant },
 		},
 	});
 
@@ -144,9 +151,10 @@ const uploadFile = async () => {
 		await loadData();
 	}
 };
+
 const onDelete = async ({ id }) => {
 	const response = await apiDelete({
-		endPoint: `penelitian-review/${id}`,
+		endPoint: `reviews/${id}`,
 		loading: loading,
 		message: '<span style="color: red">Hapus file ini?</span>',
 	});

@@ -31,8 +31,8 @@
 import apiGet from 'src/api/api-get';
 import { onMounted, ref } from 'vue';
 import CardHeader from 'src/components/CardHeader.vue';
-import CrudPenelitian from 'src/views/CrudPenelitian.vue';
-import TablePenelitian from 'src/views/TablePenelitian.vue';
+import CrudPenelitian from 'src/views/CrudProject.vue';
+import TablePenelitian from 'src/views/TableProjects.vue';
 import authStore from 'src/stores/auth-store';
 
 const loading = ref(false);
@@ -42,11 +42,11 @@ const { getUser: user } = authStore();
 
 async function loadData() {
 	const data = await apiGet({
-		endPoint: 'penelitian/by-user',
+		endPoint: 'projects/by-user',
 		loading,
 	});
 	if (data) {
-		penelitian.value = data.penelitian;
+		penelitian.value = data.projects;
 	}
 	// console.log(data.penelitian);
 }
