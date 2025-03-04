@@ -23,14 +23,14 @@ const data = [
 		protected: false,
 		sort: 'asc',
 	},
-	{
-		url: 'status-review',
-		label: 'Status Review',
-		style: 'single',
-		column: 1,
-		protected: false,
-		sort: 'asc',
-	},
+	// {
+	// 	url: 'status-review',
+	// 	label: 'Status Review',
+	// 	style: 'single',
+	// 	column: 1,
+	// 	protected: false,
+	// 	sort: 'asc',
+	// },
 	{
 		url: 'periode',
 		label: 'Periode',

@@ -81,7 +81,7 @@
 	<q-dialog v-model="crud">
 		<CrudProjectStatus
 			:data="projectStatus"
-			:project-id="params.id"
+			:project-id="Number(params.id)"
 			@success-submit="(r) => (projectStatus = r)"
 			@success-delete="null"
 		/>
