@@ -34,6 +34,7 @@
 						}
 					"
 					use-input
+					behavior="menu"
 				/>
 				<q-input
 					class="q-mt-sm"

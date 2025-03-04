@@ -20,6 +20,7 @@
 					v-model="input.jenis"
 					:options="['Penelitian', 'Pengabdian']"
 					:rules="[(val) => !!val || 'Harus diisi!']"
+					behavior="menu"
 				/>
 				<q-input
 					class="q-mt-sm"

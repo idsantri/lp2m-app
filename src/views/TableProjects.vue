@@ -1,7 +1,7 @@
 <template lang="">
 	<q-table
 		class="q-px-sm"
-		:rows="data"
+		:rows="filteredArray"
 		:columns="columns"
 		row-key="id"
 		:loading="loading"
@@ -9,13 +9,32 @@
 		:filter="filter"
 		:rows-per-page-options="[10, 25, 50, 75, 100, 0]"
 	>
+		<template v-slot:top-left>
+			<q-select
+				style="width: 250px"
+				outlined
+				label="Filter proyek"
+				dense
+				:options="arrJenis"
+				clearable
+				v-model="jenis"
+				emit-value
+				map-options
+				class="q-py-xs"
+				behavior="menu"
+			>
+			</q-select>
+		</template>
 		<template v-slot:top-right>
 			<q-input
+				class="q-py-xs"
+				style="width: 250px"
 				outlined
 				dense
 				debounce="300"
 				v-model="filter"
 				placeholder="Cari"
+				clearable
 			>
 				<template v-slot:append>
 					<q-icon name="search" />
@@ -26,11 +45,36 @@
 </template>
 <script setup>
 import { format } from 'date-fns';
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 
-defineProps({
+const props = defineProps({
 	data: { type: Array, required: true },
 	loading: { type: Boolean, required: true, default: false },
+});
+
+const jenis = ref('');
+const filteredArray = ref([]);
+
+function getUniqueJenis(data) {
+	const uniqueJenis = new Set();
+	data.forEach((item) => {
+		uniqueJenis.add(item.jenis);
+	});
+	return Array.from(uniqueJenis);
+}
+const arrJenis = ref([]);
+
+watchEffect(() => {
+	arrJenis.value = getUniqueJenis(props.data);
+
+	if (!jenis.value) {
+		filteredArray.value = props.data;
+	} else {
+		filteredArray.value = props.data.filter(
+			(item) => item.jenis === jenis.value,
+		);
+	}
+	// console.log(jenis.value);
 });
 
 const filter = ref('');
