@@ -12,7 +12,7 @@
 						/>
 					</q-dialog>
 				</div>
-				<q-select
+				<!-- <q-select
 					class="q-mt-sm"
 					dense
 					outlined
@@ -21,7 +21,9 @@
 					:options="['Penelitian', 'Pengabdian']"
 					:rules="[(val) => !!val || 'Harus diisi!']"
 					behavior="menu"
-				/>
+					readonly
+				/> -->
+				<input type="hidden" v-model="input.jenis" />
 				<q-input
 					class="q-mt-sm"
 					dense
@@ -39,14 +41,6 @@
 					v-model="input.anggota"
 					hint="Selain Anda sendiri jika ada. Jika lebih dari 1 maka pisahkan dengan titik koma (;)"
 				/>
-				<q-input
-					class="q-mt-lg"
-					dense
-					outlined
-					label="Deskripsi"
-					v-model="input.deskripsi"
-					type="textarea"
-				/>
 			</q-card-section>
 
 			<FormActions
@@ -63,6 +57,7 @@ import FormHeader from 'src/components/FormHeader.vue';
 import FormActions from 'src/components/FormActions.vue';
 import apiPost from 'src/api/api-post';
 import apiDelete from 'src/api/api-delete';
+
 const props = defineProps({
 	data: Object,
 });
@@ -74,10 +69,11 @@ async function onSubmit() {
 	const data = {
 		jenis: input.value.jenis,
 		judul: input.value.judul,
-		deskripsi: input.value.deskripsi,
 		anggota: input.value.anggota,
 	};
-
+	// const data = refToFormData(e.target, input);
+	// console.log('🚀 ~ onSubmit ~ data:', [...data]);
+	// return;
 	let response = null;
 	if (input.value.id) {
 		response = await apiUpdate({

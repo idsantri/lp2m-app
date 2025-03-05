@@ -63,12 +63,15 @@
 						</a>
 					</q-item-label>
 					<q-item-label>
+						Plagiarisme: {{ item.plagiat_percentage ?? '?' }}%
+					</q-item-label>
+					<q-item-label>
 						{{ item.kesimpulan }}
 					</q-item-label>
 				</q-item-section>
 				<q-item-section avatar>
 					<q-btn
-						label="Review"
+						label="Detail"
 						no-caps=""
 						outline
 						glossy

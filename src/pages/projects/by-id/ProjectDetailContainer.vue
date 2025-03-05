@@ -1,6 +1,6 @@
 <template lang="">
 	<q-card class="">
-		<CardHeader> Data Penelitian dan Pengabdian</CardHeader>
+		<CardHeader> Data Proyek</CardHeader>
 		<q-card-section class="no-padding">
 			<div class="row">
 				<div class="col-12 col-sm-6 col-lg-4 q-pa-sm">

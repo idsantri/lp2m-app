@@ -42,17 +42,13 @@
 
 		<!-- PROJECT -->
 
-		<q-separator dark />
-		<q-item class="" to="/projects">
-			<q-item-section>
-				<q-item-label class="text-brown-11 text-subtitle1">
-					Proyek
-				</q-item-label>
-				<q-item-label caption class="text-brown-12">
-					Penelitian dan Pengabdian
-				</q-item-label>
-			</q-item-section>
-		</q-item>
+		<ExpansionItem label="Proyek">
+			<MenuItem
+				v-for="item in menuProjects"
+				:key="item.to"
+				:item="item"
+			/>
+		</ExpansionItem>
 
 		<!-- SETTING -->
 		<ExpansionItem label="Pengaturan">
@@ -77,11 +73,25 @@ import authStore from 'src/stores/auth-store';
 const { getIsLogin, getUser } = storeToRefs(authStore());
 
 const menuUser = [
+	// {
+	// 	to: '/user/projects',
+	// 	icon: 'dashboard',
+	// 	label: 'Proyek',
+	// 	caption: 'Penelitian dan Pengabdian',
+	// 	disable: false,
+	// },
 	{
-		to: '/user/projects',
+		to: '/user/projects/penelitian',
 		icon: 'dashboard',
-		label: 'Proyek',
-		caption: 'Penelitian dan Pengabdian',
+		label: 'Penelitian',
+		caption: 'Proyek Penelitian',
+		disable: false,
+	},
+	{
+		to: '/user/projects/pengabdian',
+		icon: 'dashboard',
+		label: 'Pengabdian',
+		caption: 'Proyek Pengabdian',
 		disable: false,
 	},
 	{
@@ -89,6 +99,22 @@ const menuUser = [
 		icon: 'person',
 		label: 'Profil',
 		caption: 'Data Pengguna',
+		disable: false,
+	},
+];
+const menuProjects = [
+	{
+		to: '/projects/penelitian',
+		icon: 'dashboard',
+		label: 'Penelitian',
+		caption: 'Proyek Penelitian',
+		disable: false,
+	},
+	{
+		to: '/projects/pengabdian',
+		icon: 'dashboard',
+		label: 'Pengabdian',
+		caption: 'Proyek Pengabdian',
 		disable: false,
 	},
 ];

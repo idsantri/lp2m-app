@@ -4,7 +4,7 @@
 			<div
 				class="text-subtitle1 q-px-md bg-brown-1 flex justify-between items-center q-py-sm"
 			>
-				<div>Subyek</div>
+				<div>Subyek {{ project?.jenis?.toUpperCase() }}</div>
 				<div>
 					<q-btn
 						no-caps
@@ -41,7 +41,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="label">Peneliti</td>
+						<td class="label">Pemohon</td>
 						<td class="">
 							<RouterLink
 								:to="`/settings/users/${project.user_id}`"
@@ -50,22 +50,14 @@
 							</RouterLink>
 						</td>
 					</tr>
-					<tr>
-						<td class="label">Jenis Proyek</td>
-						<td class="text-weight-medium">
-							{{ project?.jenis?.toUpperCase() }}
-						</td>
-					</tr>
+
 					<tr>
 						<td class="label">Judul</td>
 						<td class="text-weight-medium">
 							{{ project.judul }}
 						</td>
 					</tr>
-					<tr>
-						<td class="label">Deskripsi</td>
-						<td class="">{{ project.deskripsi }}</td>
-					</tr>
+
 					<tr>
 						<td class="label">Anggota</td>
 						<td class="">{{ project.anggota }}</td>
@@ -79,7 +71,7 @@
 		<CrudProject
 			:data="project"
 			@success-submit="(r) => (project = r)"
-			@success-delete="$router.push('/user/projects')"
+			@success-delete="$router.go(-1)"
 		/>
 	</q-dialog>
 	<!-- {{ projectStatus }} -->
