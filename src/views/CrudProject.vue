@@ -1,7 +1,10 @@
 <template lang="">
 	<q-card class="full-width" style="max-width: 425px">
 		<q-form @submit.prevent="onSubmit">
-			<FormHeader title="Input Proyek" :is-new="data.id ? false : true" />
+			<FormHeader
+				:title="`Input Proyek ${input?.jenis?.toUpperCase()}`"
+				:is-new="data.id ? false : true"
+			/>
 			<q-card-section>
 				<div v-if="loadingCrud">
 					<q-dialog v-model="loadingCrud" persistent="">
