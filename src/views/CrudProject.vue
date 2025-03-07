@@ -60,11 +60,27 @@ import FormHeader from 'src/components/FormHeader.vue';
 import FormActions from 'src/components/FormActions.vue';
 import apiPost from 'src/api/api-post';
 import apiDelete from 'src/api/api-delete';
+import authStore from 'src/stores/auth-store';
+import { notifyAlert } from 'src/utils/notify';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const props = defineProps({
 	data: Object,
 });
 const emit = defineEmits(['successSubmit', 'successDelete']);
+
+const { getUser: user } = authStore();
+onMounted(async () => {
+	const isOK = user.prodi && user.nidn && user.suffix;
+	if (!isOK) {
+		await notifyAlert(
+			'Anda belum melengkapi data profil. <br /> Silakan lengkapi terlebih dahulu!',
+			0,
+		);
+		router.push('/user/profile');
+	}
+});
 
 const input = ref({});
 const loadingCrud = ref(false);

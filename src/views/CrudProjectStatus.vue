@@ -33,6 +33,7 @@
 					label="Reviewer"
 					class="q-mt-sm"
 					:rules="[(val) => !!val || 'Harus diisi!']"
+					v-if="!isPengabdian"
 				/>
 				<InputSelectArray
 					v-model="input.proposal_status"
@@ -40,6 +41,7 @@
 					label="Status Proposal"
 					class="q-mt-sm"
 					clearable
+					v-if="!isPengabdian"
 				/>
 				<q-input
 					class="q-mt-sm"
@@ -49,6 +51,7 @@
 					v-model="input.proposal_keterangan"
 					autogrow
 					hint="Keterangan tambahan untuk proposal"
+					v-if="!isPengabdian"
 				/>
 				<InputSelectArray
 					v-model="input.laporan_status"
@@ -83,6 +86,7 @@ import apiPost from 'src/api/api-post';
 const props = defineProps({
 	data: Object,
 	projectId: { type: Number, required: true },
+	isPengabdian: { type: Boolean, required: true },
 });
 const emit = defineEmits(['successSubmit', 'successDelete']);
 const input = ref({});

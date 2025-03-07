@@ -10,7 +10,12 @@
 				align="left"
 				:breakpoint="0"
 			>
-				<q-tab name="proposal" label="Proposal" no-caps />
+				<q-tab
+					name="proposal"
+					label="Proposal"
+					no-caps
+					v-if="!isPengabdian"
+				/>
 				<q-tab name="laporan" label="Laporan" no-caps />
 			</q-tabs>
 			<q-tab-panels v-model="tab" class="q-mt-sm">
@@ -26,8 +31,16 @@
 	</q-card>
 </template>
 <script setup>
-import { ref } from 'vue';
-const tab = ref('proposal');
+import { ref, watchEffect } from 'vue';
 import TemplateReview from 'src/views/TemplateReview.vue';
+
+const props = defineProps({
+	isPengabdian: { type: Boolean, required: true },
+});
+
+const tab = ref('');
+watchEffect(() => {
+	props.isPengabdian ? (tab.value = 'laporan') : (tab.value = 'proposal');
+});
 </script>
 <style lang="scss" scoped></style>

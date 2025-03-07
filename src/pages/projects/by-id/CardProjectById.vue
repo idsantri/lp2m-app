@@ -48,6 +48,11 @@
 							>
 								{{ project.user_name }}
 							</RouterLink>
+							{{
+								project.user_prodi
+									? `(${project.user_prodi})`
+									: ''
+							}}
 						</td>
 					</tr>
 
@@ -74,7 +79,6 @@
 			@success-delete="$router.go(-1)"
 		/>
 	</q-dialog>
-	<!-- {{ projectStatus }} -->
 </template>
 <script setup>
 import apiGet from 'src/api/api-get';
@@ -86,9 +90,8 @@ import { formatDate } from 'src/utils/format-date';
 const { params } = useRoute();
 const loading = ref(false);
 const project = ref({});
-const projectStatus = ref({});
-
 const crud = ref(false);
+const emit = defineEmits(['onLoad']);
 
 async function loadData() {
 	const data = await apiGet({
@@ -97,13 +100,14 @@ async function loadData() {
 	});
 	if (data) {
 		// console.log('🚀 ~ loadData ~ data:', data);
+		// console.log('🚀 ~ loadData ~ data:', data);
 		project.value = data.project;
-		projectStatus.value = data.project_status;
 	}
 }
 
 onMounted(async () => {
 	await loadData();
+	emit('onLoad', project.value);
 });
 </script>
 <style lang="scss" scoped>

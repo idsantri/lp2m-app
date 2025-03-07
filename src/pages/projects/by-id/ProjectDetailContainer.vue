@@ -4,13 +4,20 @@
 		<q-card-section class="no-padding">
 			<div class="row">
 				<div class="col-12 col-sm-6 col-lg-4 q-pa-sm">
-					<DetailProjectById />
+					<DetailProjectById
+						@onLoad="
+							(project) =>
+								project.jenis?.toLowerCase() == 'pengabdian'
+									? (isPengabdian = true)
+									: (isPengabdian = false)
+						"
+					/>
 				</div>
 				<div class="col-12 col-sm-6 col-lg-4 q-pa-sm">
-					<DetailProjectReview />
+					<DetailProjectReview :is-pengabdian="isPengabdian" />
 				</div>
 				<div class="col-12 col-sm-6 col-lg-4 q-pa-sm">
-					<DetailProjectStatus />
+					<DetailProjectStatus :is-pengabdian="isPengabdian" />
 				</div>
 				<div class="col-12 col-sm-6 col-lg-4 q-pa-sm">
 					<DetailProjectOutcome />
@@ -25,5 +32,8 @@ import DetailProjectById from './CardProjectById.vue';
 import DetailProjectReview from './CardProjectReview.vue';
 import DetailProjectStatus from './CardProjectStatus.vue';
 import DetailProjectOutcome from './CardProjectOutcome.vue';
+import { ref } from 'vue';
+
+const isPengabdian = ref(false);
 </script>
 <style lang="scss" scoped></style>

@@ -76,6 +76,13 @@ const columns = [
 		sortable: true,
 	},
 	{
+		name: 'user_prodi',
+		label: 'Prodi',
+		align: 'left',
+		field: 'user_prodi',
+		sortable: true,
+	},
+	{
 		name: 'proposal_status',
 		label: 'Status Proposal',
 		align: 'left',

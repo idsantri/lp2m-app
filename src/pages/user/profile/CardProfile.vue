@@ -16,9 +16,9 @@
 					class="q-mt-sm"
 					dense
 					outlined
-					label="Awalan"
+					label="Gelar Awal"
 					v-model="input.prefix"
-					hint="Gelar akademis (singkatan atau akronim)"
+					hint="Gelar akademis (singkatan/akronim)"
 				/>
 				<q-input
 					class="q-mt-sm"
@@ -32,24 +32,27 @@
 					class="q-mt-sm"
 					dense
 					outlined
-					label="Akhiran"
+					label="Gelar Akhir"
 					v-model="input.suffix"
-					hint="Gelar akademis (singkatan atau akronim)"
+					hint="Gelar akademis (singkatan/akronim)"
+					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
 				<q-input
 					class="q-mt-sm"
 					dense
 					outlined
-					label="NIDN"
+					label="NIDN/NUPTK"
 					v-model="input.nidn"
-					hint="Nomor Induk Dosen Nasional"
+					hint="Nomor Induk Dosen Nasional/ Nomor Unik Pendidik dan Tenaga Kependidikan"
+					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
 				<InputSelectArray
 					v-model="input.prodi"
 					url="prodi"
 					label="Prodi *"
-					class="q-mt-sm"
+					class="q-mt-md"
 					:btn-setting="false"
+					:rules="[(val) => !!val || 'Harus diisi!']"
 				/>
 				<q-input
 					class="q-mt-sm"

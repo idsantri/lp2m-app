@@ -12,9 +12,6 @@
 					hint="Username atau email/surel Anda!"
 					autocomplete="off"
 					autocapitalize="none"
-					readonly
-					onfocus="this.removeAttribute('readonly');"
-					onblur="this.setAttribute('readonly','true');"
 				/>
 				<q-input
 					id="password"
@@ -27,9 +24,6 @@
 					required
 					autocomplete="off"
 					autocapitalize="none"
-					readonly
-					onfocus="this.removeAttribute('readonly');"
-					onblur="this.setAttribute('readonly','true');"
 					hint="Password atau kata sandi"
 				/>
 				<q-btn

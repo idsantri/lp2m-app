@@ -38,7 +38,7 @@
 						<td class="label">Periode</td>
 						<td class="">{{ projectStatus?.periode }}</td>
 					</tr>
-					<tr>
+					<tr v-if="!isPengabdian">
 						<td class="label">Reviewer</td>
 						<td class="">
 							<RouterLink
@@ -49,13 +49,13 @@
 							</RouterLink>
 						</td>
 					</tr>
-					<tr>
+					<tr v-if="!isPengabdian">
 						<td class="label">Status Proposal</td>
 						<td class="">
 							{{ projectStatus?.proposal_status }}
 						</td>
 					</tr>
-					<tr>
+					<tr v-if="!isPengabdian">
 						<td class="label">Keterangan Proposal</td>
 						<td class="">
 							{{ projectStatus?.proposal_keterangan }}
@@ -80,6 +80,7 @@
 
 	<q-dialog v-model="crud">
 		<CrudProjectStatus
+			:is-pengabdian="isPengabdian"
 			:data="projectStatus"
 			:project-id="Number(params.id)"
 			@success-submit="(r) => (projectStatus = r)"
@@ -94,12 +95,17 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import CrudProjectStatus from 'src/views/CrudProjectStatus.vue';
 
+defineProps({
+	isPengabdian: { type: Boolean, required: true },
+});
+
 const { params } = useRoute();
 const loading = ref(false);
 const projectStatus = ref({});
 
 const crud = ref(false);
 
+// console.log(isPengabdian.value);
 async function loadData() {
 	const data = await apiGet({
 		endPoint: 'projects-status',
