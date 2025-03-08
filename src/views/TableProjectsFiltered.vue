@@ -82,20 +82,20 @@ const columns = [
 		field: 'user_prodi',
 		sortable: true,
 	},
-	{
-		name: 'proposal_status',
-		label: 'Status Proposal',
-		align: 'left',
-		field: 'proposal_status',
-		sortable: true,
-	},
-	{
-		name: 'laporan_status',
-		label: 'Status Laporan',
-		align: 'left',
-		field: 'laporan_status',
-		sortable: true,
-	},
+	// {
+	// 	name: 'proposal_status',
+	// 	label: 'Status Proposal',
+	// 	align: 'left',
+	// 	field: 'proposal_status',
+	// 	sortable: true,
+	// },
+	// {
+	// 	name: 'laporan_status',
+	// 	label: 'Status Laporan',
+	// 	align: 'left',
+	// 	field: 'laporan_status',
+	// 	sortable: true,
+	// },
 ];
 </script>
 <style lang=""></style>
