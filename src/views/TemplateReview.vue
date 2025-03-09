@@ -96,6 +96,7 @@ import InputFile from 'src/components/InputFile.vue';
 import { formatDate } from 'src/utils/format-date';
 import apiPost from 'src/api/api-post';
 import apiDelete from 'src/api/api-delete';
+import { notifyError } from 'src/utils/notify';
 
 const props = defineProps({
 	variant: {

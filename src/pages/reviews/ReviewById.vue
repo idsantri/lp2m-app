@@ -42,9 +42,13 @@
 						</ContentLabel>
 						<ContentLabel label="Reviewer">
 							<RouterLink
+								v-if="project?.reviewer_user_id"
 								:to="`/settings/users/${project?.reviewer_user_id}`"
 								>{{ project?.reviewer_user_name }}</RouterLink
 							>
+							<div v-else class="text-negative text-italic">
+								Tidak/ belum ada reviewer untuk proyek ini
+							</div>
 						</ContentLabel>
 					</q-card-section>
 				</q-card>
@@ -123,7 +127,7 @@
 			</q-card-section>
 
 			<!-- REVIEW -->
-			<q-card-section class="q-pa-sm">
+			<q-card-section class="q-pa-sm" v-if="project?.reviewer_user_id">
 				<q-card bordered="" flat>
 					<q-card-section class="q-pa-sm bg-brown-1 flex">
 						<div class="text-subtitle1">Review</div>
@@ -202,7 +206,7 @@ async function loadData() {
 		endPoint: `reviews/${params.id}`,
 		loading,
 	});
-	// console.log('🚀 ~ loadData ~ data:', data);
+	console.log('🚀 ~ loadData ~ data:', data);
 	if (data) {
 		// console.log('🚀 ~ loadData ~ data:', data);
 		review.value = data.review;
